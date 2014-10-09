@@ -1,0 +1,11 @@
+docs
+test
+.travis.yml
+AUTHORS.md
+CONTRIBUTING.md
+Gruntfile.js
+INSTALL.md
+README.md
+bower.json
+el.min.js
+el.min.map
