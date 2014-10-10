@@ -27,7 +27,7 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-1">&#182;</a>
               </div>
-              <p><a href="http://neocotic.com/ELJS">ELJS</a> 0.1.0</p>
+              <p><a href="http://neocotic.com/ELJS">ELJS</a> 0.1.0alpha</p>
 <p>Copyright (c) 2014 Alasdair Mercer</p>
 <p>Freely distributable under the MIT license.</p>
 <p>For all details and documentation:</p>
@@ -174,7 +174,10 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">var</span> el = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(expression, scope, options)</span> </span>{</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">var</span> el = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(expression, scope, options)</span> </span>{
+    expression = expression || <span class="hljs-string">''</span>;
+    scope = scope || {};
+    options = options || {};</pre></div></div>
             
         </li>
         
@@ -189,10 +192,7 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    expression = expression || <span class="hljs-string">''</span>;
-    scope = scope || {};
-    options = options || {};
-  };</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  };</pre></div></div>
             
         </li>
         
@@ -232,7 +232,7 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  el.VERSION = <span class="hljs-string">'0.1.0'</span>;</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  el.VERSION = <span class="hljs-string">'0.1.0alpha'</span>;</pre></div></div>
             
         </li>
         

@@ -1,4 +1,4 @@
-// [ELJS](http://neocotic.com/ELJS) 0.1.0
+// [ELJS](http://neocotic.com/ELJS) 0.1.0alpha
 //
 // Copyright (c) 2014 Alasdair Mercer
 //
@@ -40,17 +40,18 @@
 
   // TODO: Document
   var el = function(expression, scope, options) {
-    // TODO: Complete
     expression = expression || '';
     scope = scope || {};
     options = options || {};
+
+    // TODO: Complete
   };
 
   // Constants
   // ---------
 
   // Current version of `ELJS`.
-  el.VERSION = '0.1.0';
+  el.VERSION = '0.1.0alpha';
 
   // Utility functions
   // -----------------

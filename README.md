@@ -51,7 +51,7 @@ This is really just intended for use within a browser.
 The current version of `el`.
 
 ``` javascript
-console.log(el.VERSION); // "0.1.0"
+console.log(el.VERSION); // "0.1.0alpha"
 ```
 
 ## Bugs

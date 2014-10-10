@@ -1,6 +1,6 @@
 {
   "name": "eljs",
-  "version": "0.1.0",
+  "version": "0.1.0alpha",
   "description": "Expression language for JavaScript",
   "homepage": "http://neocotic.com/ELJS",
   "bugs": {
