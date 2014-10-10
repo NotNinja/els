@@ -14,6 +14,8 @@
 [![Dependency Status](http://img.shields.io/gemnasium/neocotic/ELJS.svg?style=flat)][4]
 [![License](http://img.shields.io/npm/l/eljs.svg?style=flat)][8]
 
+> This project is currently very much a work in progress and is not yet functional
+
 ## Install
 
 Install using the package manager for your desired environment(s):
