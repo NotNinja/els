@@ -8,9 +8,11 @@
 
 [ELJS][0] is an expression language dedicated to JavaScript.
 
-[![Build Status](https://travis-ci.org/neocotic/ELJS.svg?branch=develop)][1]
-[![Dependency Status](https://gemnasium.com/neocotic/ELJS.svg)][3]
-[![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)][4]
+[![Release](http://img.shields.io/github/release/neocotic/ELJS.svg?style=flat)][1]
+[![Build Status](http://img.shields.io/travis/neocotic/ELJS/develop.svg?style=flat)][3]
+[![Downloads](http://img.shields.io/npm/dm/eljs.svg?style=flat)][2]
+[![Dependency Status](http://img.shields.io/gemnasium/neocotic/ELJS.svg?style=flat)][4]
+[![License](http://img.shields.io/npm/l/eljs.svg?style=flat)][8]
 
 ## Install
 
@@ -71,10 +73,10 @@ Copyright (c) 2014 Alasdair Mercer
 See [LICENSE.md][8] for more information on our MIT license.
 
 [0]: http://neocotic.com/ELJS
-[1]: https://travis-ci.org/neocotic/ELJS
-[2]: https://twitter.com/neocotic
-[3]: https://gemnasium.com/neocotic/ELJS
-[4]: http://gruntjs.com
+[1]: https://github.com/neocotic/ELJS
+[2]: http://npmjs.org/package/eljs
+[3]: https://travis-ci.org/neocotic/ELJS
+[4]: https://gemnasium.com/neocotic/ELJS
 [5]: https://github.com/neocotic/ELJS/issues
 [6]: https://github.com/neocotic/ELJS/blob/master/AUTHORS.md
 [7]: https://github.com/neocotic/ELJS/blob/master/CONTRIBUTING.md
