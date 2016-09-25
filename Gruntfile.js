@@ -22,6 +22,7 @@
 
 module.exports = function(grunt) {
   var commonjs
+  var nodeResolve
   var semver = require('semver')
   var uglify
 
@@ -52,6 +53,7 @@ module.exports = function(grunt) {
 
   if (semver.satisfies(process.version, '>=0.12')) {
     commonjs = require('rollup-plugin-commonjs')
+    nodeResolve = require('rollup-plugin-node-resolve')
     uglify = require('rollup-plugin-uglify')
 
     compileTasks.push('clean', 'rollup')
@@ -71,6 +73,7 @@ module.exports = function(grunt) {
             sourceMapRelativePaths: true,
             plugins: function() {
               return [
+                nodeResolve(),
                 commonjs()
               ]
             }
@@ -89,6 +92,7 @@ module.exports = function(grunt) {
             banner: '/*! ELJS v<%= pkg.version %> | (C) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %> | MIT License */',
             plugins: function() {
               return [
+                nodeResolve(),
                 commonjs(),
                 uglify({
                   output: {
