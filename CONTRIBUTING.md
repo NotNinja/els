@@ -1,40 +1,31 @@
 # Contributing
 
-If you have any questions about [ELJS][0] please feel free to [raise an issue][2].
+If you have any questions about [Oopsy](https://github.com/Skelp/ELJS) please feel free to
+[raise an issue](https://github.com/Skelp/ELJS/issues/new).
 
-Please [search existing issues][1] for the same feature and/or issue before raising a new issue. Commenting on an
-existing issue is usually preferred over raising duplicate issues.
+Please [search existing issues](https://github.com/Skelp/ELJS/issues) for the same feature and/or issue before raising a
+new issue. Commenting on an existing issue is usually preferred over raising duplicate issues.
 
-Ensure that you update any relevant unit tests (in the `test` directory) and that all tests are currently passing. This
-can be done easily via command-line:
+Please ensure that all files conform to the coding standards, using the same coding style as the rest of the code base.
+All unit tests should be updated and passing as well. All of this can easily be checked via command-line:
 
 ``` bash
 # install/update package dependencies
 $ npm install
 # run test suite
-$ grunt test
+$ npm test
 ```
 
-You will obviously need to have [node.js][3] for this, but you should also need to install (if you haven't done so
-already) the [Grunt][4] command-line tool:
+If you're using a version of [Node.js](https://nodejs.org) that is older than 0.12, then linting is not performed by
+this step. Please consider upgrading to at least 0.12 or your pull request may fail on the CI build.
 
-``` bash
-$ npm install -g grunt-cli
-```
-
-Use the same coding style as the rest of the [code base][0].
-
-When submitting a pull request, please do *not* build the documentation or the minified files. We will built the
-distributables when cutting a release.
+Likewise, [Node.js](https://nodejs.org) versions older than 0.10 will also not be able to compile the source code using
+[Rollup](http://rollupjs.org) so the test suite will not be executed against any changes you've made to `lib/**.js`. For
+this reason, 0.10 is not supported from a development perspective, but our CI builds do run the test suite against the
+pre-compiled code for this version to ensure that it works.
 
 All pull requests should be made to the `develop` branch.
 
-Don't forget to add your details to the list of [AUTHORS.md][5] if you want your contribution to be recognized by
+Don't forget to add your details to the list of
+[AUTHORS.md](https://github.com/Skelp/ELJS/blob/master/AUTHORS.md) if you want your contribution to be recognized by
 others.
-
-[0]: https://github.com/neocotic/ELJS
-[1]: https://github.com/neocotic/ELJS/issues
-[2]: https://github.com/neocotic/ELJS/issues/new
-[3]: http://nodejs.org
-[4]: http://gruntjs.com
-[5]: https://github.com/neocotic/ELJS/blob/master/AUTHORS.md

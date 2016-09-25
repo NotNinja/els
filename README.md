@@ -1,18 +1,23 @@
-     ____    __       _____  ____
-    /\  _`\ /\ \     /\___ \/\  _`\
-    \ \ \L\_\ \ \    \/__/\ \ \,\L\_\
-     \ \  _\L\ \ \  __  _\ \ \/_\__ \
-      \ \ \L\ \ \ \L\ \/\ \_\ \/\ \L\ \
-       \ \____/\ \____/\ \____/\ `\____\
-        \/___/  \/___/  \/___/  \/_____/
+    8888888888 888    888888  .d8888b.
+    888        888      "88b d88P  Y88b
+    888        888       888 Y88b.
+    8888888    888       888  "Y888b.
+    888        888       888     "Y88b.
+    888        888       888       "888
+    888        888       88P Y88b  d88P
+    8888888888 88888888  888  "Y8888P"
+                       .d88P
+                     .d88P"
+                    888P"
 
-[ELJS][0] is an expression language dedicated to JavaScript.
+[ELJS](https://github.com/Skelp/ELJS) is an expression language dedicated to JavaScript based on
+[Angular Expressions](https://docs.angularjs.org/guide/expression).
 
-[![Release](http://img.shields.io/github/release/neocotic/ELJS.svg?style=flat)][1]
-[![Build Status](http://img.shields.io/travis/neocotic/ELJS/develop.svg?style=flat)][3]
-[![Downloads](http://img.shields.io/npm/dm/eljs.svg?style=flat)][2]
-[![Dependency Status](http://img.shields.io/gemnasium/neocotic/ELJS.svg?style=flat)][4]
-[![License](http://img.shields.io/npm/l/eljs.svg?style=flat)][8]
+[![Build Status](https://img.shields.io/travis/Skelp/ELJS/develop.svg?style=flat-square)](https://travis-ci.org/Skelp/ELJS)
+[![Dependency Status](https://img.shields.io/david/Skelp/ELJS.svg?style=flat-square)](https://david-dm.org/Skelp/ELJS)
+[![Dev Dependency Status](https://img.shields.io/david/dev/Skelp/ELJS.svg?style=flat-square)](https://david-dm.org/Skelp/ELJS#info=devDependencies)
+[![License](https://img.shields.io/npm/l/eljs.svg?style=flat-square)](https://github.com/Skelp/ELJS/blob/master/LICENSE.md)
+[![Release](https://img.shields.io/npm/v/eljs.svg?style=flat-square)](https://www.npmjs.com/package/eljs)
 
 > This project is currently very much a work in progress and is not yet functional
 
@@ -21,65 +26,39 @@
 Install using the package manager for your desired environment(s):
 
 ``` bash
-# for node.js:
-$ npm install eljs
-# OR; for the browser:
-$ bower install eljs
+$ npm install --save eljs
+# OR:
+$ bower install --save eljs
 ```
 
-This library has no dependencies on any other library.
+You'll need to have at least [Node.js](https://nodejs.org) installed and you'll only need [Bower](https://bower.io) if
+you want to install that way instead of using `npm`.
 
-## Usage
+If you want to simply download the file to be used in the browser you can find them below:
 
-TODO
+* [Development Version](https://github.com/Skelp/ELJS/blob/master/dist/el.js)
+* [Production Version](https://github.com/Skelp/ELJS/blob/master/dist/el.min.js)
 
-### Miscellaneous
+## API
 
-#### `noConflict()`
-Returns `el` in a no-conflict state, reallocating the `el` global variable name to its previous owner, where possible.
-
-This is really just intended for use within a browser.
-
-``` html
-<script src="/path/to/conflict-lib.js"></script>
-<script src="/path/to/el.min.js"></script>
-<script>
-  var elNC = el.noConflict();
-  // Conflicting lib works again and use elNC for this library onwards...
-</script>
-```
-
-#### `VERSION`
-The current version of `el`.
-
-``` javascript
-console.log(el.VERSION); // "0.1.0alpha"
-```
+TODO: Document
 
 ## Bugs
 
-If you have any problems with this library or would like to see changes currently in development you can do so
-[here][5].
+If you have any problems with ELJS or would like to see changes currently in development you can do so
+[here](https://github.com/Skelp/ELJS/issues).
 
 ## Contributors
 
-If you want to contribute, you're a legend! Information on how you can do so can be found in [CONTRIBUTING.md][7]. We
-want your suggestions and pull requests!
+If you want to contribute, you're a legend! Information on how you can do so can be found in
+[CONTRIBUTING.md](https://github.com/Skelp/ELJS/blob/master/CONTRIBUTING.md). We want your suggestions and pull
+requests!
 
-A list of [ELJS][0] contributors can be found in [AUTHORS.md][6].
+A list of ELJS contributors can be found in [AUTHORS.md](https://github.com/Skelp/ELJS/blob/master/AUTHORS.md).
 
 ## License
 
-Copyright (c) 2014 Alasdair Mercer
+See [LICENSE.md](https://github.com/Skelp/ELJS/raw/master/LICENSE.md) for more information on our MIT license.
 
-See [LICENSE.md][8] for more information on our MIT license.
-
-[0]: http://neocotic.com/ELJS
-[1]: https://github.com/neocotic/ELJS
-[2]: http://npmjs.org/package/eljs
-[3]: https://travis-ci.org/neocotic/ELJS
-[4]: https://gemnasium.com/neocotic/ELJS
-[5]: https://github.com/neocotic/ELJS/issues
-[6]: https://github.com/neocotic/ELJS/blob/master/AUTHORS.md
-[7]: https://github.com/neocotic/ELJS/blob/master/CONTRIBUTING.md
-[8]: https://github.com/neocotic/ELJS/blob/master/LICENSE.md
+© 2016 [Skelp](https://skelp.io)
+<img align="right" width="16" height="16" src="https://cdn.rawgit.com/Skelp/skelp-branding/master/assets/logo/base/skelp-logo-16x16.png">
