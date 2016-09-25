@@ -1,41 +1,46 @@
 {
   "name": "eljs",
-  "version": "0.1.0alpha",
+  "version": "0.1.0",
   "description": "Expression language for JavaScript",
-  "homepage": "http://neocotic.com/ELJS",
+  "homepage": "https://github.com/Skelp/ELJS",
   "bugs": {
-    "url": "https://github.com/neocotic/ELJS/issues"
+    "url": "https://github.com/Skelp/ELJS/issues"
   },
   "author": {
     "name": "Alasdair Mercer",
-    "email": "mercer.alasdair@gmail.com",
-    "url": "http://neocotic.com"
+    "email": "alasdair@skelp.io",
+    "url": "https://skelp.io"
   },
-  "licenses": [
-    {
-      "type": "MIT",
-      "url": "https://github.com/neocotic/ELJS/raw/master/LICENSE.md"
-    }
-  ],
+  "license": "MIT",
   "keywords": [
     "expression",
     "language"
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/neocotic/ELJS.git"
+    "url": "https://github.com/Skelp/ELJS.git"
+  },
+  "dependencies": {
+    "oopsy": "^0.1.1"
   },
   "devDependencies": {
-    "expect.js": "^0.3.1",
-    "grunt": "^0.4.5",
-    "grunt-contrib-jshint": "^0.10.0",
-    "grunt-contrib-uglify": "^0.6.0",
-    "grunt-contrib-watch": "^0.6.1",
-    "grunt-docco": "^0.3.3",
-    "grunt-mocha-test": "^0.12.1"
+    "chai": "^3.5.0",
+    "eslint-config-skelp": "^0.1.5",
+    "grunt": "^1.0.1",
+    "grunt-cli": "^1.2.0",
+    "grunt-contrib-clean": "^1.0.0",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-eslint": "^18.1.0",
+    "grunt-mocha-test": "^0.13.2",
+    "grunt-rollup": "^0.8.0",
+    "mocha": "^3.0.2",
+    "rollup-plugin-commonjs": "^5.0.4",
+    "rollup-plugin-uglify": "^1.0.1",
+    "semver": "^5.3.0"
   },
-  "main": "el.js",
+  "main": "dist/el.js",
   "scripts": {
+    "build": "grunt build",
     "test": "grunt test"
   }
 }
