@@ -1,11 +1,9 @@
-docs
-test
-.travis.yml
+lib/
+test/
+.*
 AUTHORS.md
+bower.json
+CHANGES.md
 CONTRIBUTING.md
 Gruntfile.js
-INSTALL.md
 README.md
-bower.json
-el.min.js
-el.min.map
