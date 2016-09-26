@@ -2,5 +2,24 @@
   "extends": "skelp/v2/es5",
   "env": {
     "node": true
+  },
+  "rules": {
+    "max-params": "off",
+    "no-empty-function": "off",
+    "no-invalid-this": "off",
+    "no-undefined": "off",
+    "no-unused-vars": [
+      "warn",
+      {
+        "args": "none"
+      }
+    ],
+    "valid-jsdoc": [
+      "error",
+      {
+        "requireParamDescription": false,
+        "requireReturnDescription": false
+      }
+    ]
   }
 }
