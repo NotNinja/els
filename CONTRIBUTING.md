@@ -1,6 +1,6 @@
 # Contributing
 
-If you have any questions about [Oopsy](https://github.com/Skelp/ELJS) please feel free to
+If you have any questions about [ELJS](https://github.com/Skelp/ELJS) please feel free to
 [raise an issue](https://github.com/Skelp/ELJS/issues/new).
 
 Please [search existing issues](https://github.com/Skelp/ELJS/issues) for the same feature and/or issue before raising a
