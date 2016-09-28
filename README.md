@@ -14,7 +14,6 @@
 [Angular Expressions](https://docs.angularjs.org/guide/expression).
 
 [![Build Status](https://img.shields.io/travis/Skelp/ELJS/develop.svg?style=flat-square)](https://travis-ci.org/Skelp/ELJS)
-[![Dependency Status](https://img.shields.io/david/Skelp/ELJS.svg?style=flat-square)](https://david-dm.org/Skelp/ELJS)
 [![Dev Dependency Status](https://img.shields.io/david/dev/Skelp/ELJS.svg?style=flat-square)](https://david-dm.org/Skelp/ELJS#info=devDependencies)
 [![License](https://img.shields.io/npm/l/eljs.svg?style=flat-square)](https://github.com/Skelp/ELJS/blob/master/LICENSE.md)
 [![Release](https://img.shields.io/npm/v/eljs.svg?style=flat-square)](https://www.npmjs.com/package/eljs)
