@@ -22,4 +22,26 @@
 
 'use strict'
 
-module.exports = function() {}
+var Oopsy = require('oopsy')
+
+/**
+ * @public
+ * @class EL
+ */
+var EL = Oopsy.extend(null, {
+
+  /**
+   * @param {string} expression
+   * @param {Object} [context]
+   * @return {*}
+   * @public
+   * @static
+   */
+  parse: function(expression, context) {
+    // TODO: Complete
+    return null
+  }
+
+})
+
+module.exports = EL
