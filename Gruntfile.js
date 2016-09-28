@@ -41,7 +41,7 @@ module.exports = function(grunt) {
 
     watch: {
       all: {
-        files: [ 'lib/**/*.js', 'test/**/*.js' ],
+        files: [ 'src/**/*.js', 'test/**/*.js' ],
         tasks: [ 'build', 'mochaTest' ]
       }
     }
@@ -79,7 +79,7 @@ module.exports = function(grunt) {
             }
           },
           files: {
-            'dist/el.js': 'lib/el.js'
+            'dist/el.js': 'src/el.js'
           }
         },
         umdProduction: {
@@ -105,7 +105,7 @@ module.exports = function(grunt) {
             }
           },
           files: {
-            'dist/el.min.js': 'lib/el.js'
+            'dist/el.min.js': 'src/el.js'
           }
         }
       }
@@ -122,7 +122,7 @@ module.exports = function(grunt) {
     testTasks.unshift('eslint')
 
     grunt.config.set('eslint', {
-      target: [ 'lib/**/*.js', 'test/**/*.js' ]
+      target: [ 'src/**/*.js', 'test/**/*.js' ]
     })
 
     grunt.loadNpmTasks('grunt-eslint')

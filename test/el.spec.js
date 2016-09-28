@@ -24,7 +24,7 @@
 
 var expect = require('chai').expect
 
-var el = require('../lib/el')
+var el = require('../src/el')
 
 describe('el', function() {
   it('should be exported as a function', function() {

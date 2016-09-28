@@ -27,7 +27,7 @@
 var Oopsy = require('oopsy')
 
 var Characters = require('./characters')
-var Lang = require('./lang')
+var Lang = require('../lang')
 var NumberWrapper = Lang.NumberWrapper
 var StringJoiner = Lang.StringJoiner
 var StringWrapper = Lang.StringWrapper

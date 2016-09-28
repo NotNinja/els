@@ -26,7 +26,7 @@
     "node"
   ],
   "ignore": [
-    "lib/",
+    "src/",
     "test/",
     ".*",
     "AUTHORS.md",

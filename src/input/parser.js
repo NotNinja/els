@@ -29,7 +29,7 @@ var Oopsy = require('oopsy')
 var ast = require('./ast')
 var Characters = require('./characters')
 var InterpolationConfig = require('./interpolation-config')
-var Lang = require('./lang')
+var Lang = require('../lang')
 var StringWrapper = Lang.StringWrapper
 var lexer = require('./lexer')
 

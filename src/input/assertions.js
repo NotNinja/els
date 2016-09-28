@@ -24,7 +24,7 @@
 
 var Oopsy = require('oopsy')
 
-var Lang = require('./lang')
+var Lang = require('../lang')
 
 /**
  * @public
