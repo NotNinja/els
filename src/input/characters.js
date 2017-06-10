@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 Alasdair Mercer, Skelp
+ * Copyright (C) 2017 Alasdair Mercer, !ninja
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -20,15 +20,15 @@
  * SOFTWARE.
  */
 
-'use strict'
+'use strict';
 
-var Oopsy = require('oopsy')
+var Nevis = require('nevis/lite');
 
 /**
  * @public
  * @class Characters
  */
-var Characters = Oopsy.extend(null, {
+var Characters = Nevis.extend(null, {
 
   /**
    * @public
@@ -103,9 +103,9 @@ var Characters = Oopsy.extend(null, {
    * @static
    */
   isAsciiLetter: function(code) {
-    var chars = Characters.chars
+    var chars = Characters.chars;
 
-    return (code >= chars.$a && code <= chars.$z) || (code >= chars.$A && code <= chars.$Z)
+    return (code >= chars.$a && code <= chars.$z) || (code >= chars.$A && code <= chars.$Z);
   },
 
   /**
@@ -115,9 +115,9 @@ var Characters = Oopsy.extend(null, {
    * @static
    */
   isDigit: function(code) {
-    var chars = Characters.chars
+    var chars = Characters.chars;
 
-    return chars.$0 <= code && code <= chars.$9
+    return chars.$0 <= code && code <= chars.$9;
   },
 
   /**
@@ -127,9 +127,9 @@ var Characters = Oopsy.extend(null, {
    * @static
    */
   isWhitespace: function(code) {
-    var chars = Characters.chars
+    var chars = Characters.chars;
 
-    return (code >= chars.$TAB && code <= chars.$SPACE) || (code === chars.$NBSP)
+    return (code >= chars.$TAB && code <= chars.$SPACE) || (code === chars.$NBSP);
   },
 
   /**
@@ -139,24 +139,24 @@ var Characters = Oopsy.extend(null, {
    * @static
    */
   unescape: function(code) {
-    var chars = Characters.chars
+    var chars = Characters.chars;
 
     switch (code) {
     case chars.$n:
-      return chars.$LF
+      return chars.$LF;
     case chars.$f:
-      return chars.$FF
+      return chars.$FF;
     case chars.$r:
-      return chars.$CR
+      return chars.$CR;
     case chars.$t:
-      return chars.$TAB
+      return chars.$TAB;
     case chars.$v:
-      return chars.$VTAB
+      return chars.$VTAB;
     default:
-      return code
+      return code;
     }
   }
 
-})
+});
 
-module.exports = Characters
+module.exports = Characters;

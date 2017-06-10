@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 Alasdair Mercer, Skelp
+ * Copyright (C) 2017 Alasdair Mercer, !ninja
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -20,121 +20,76 @@
  * SOFTWARE.
  */
 
+'use strict';
+
 module.exports = function(grunt) {
-  var commonjs
-  var nodeResolve
-  var semver = require('semver')
-  var uglify
+  var commonjs = require('rollup-plugin-commonjs');
+  var nodeResolve = require('rollup-plugin-node-resolve');
+  var uglify = require('rollup-plugin-uglify');
 
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
 
-    mochaTest: {
-      test: {
-        options: {
-          clearRequireCache: true,
-          reporter: 'spec'
-        },
-        src: [ 'test/**/*.spec.js' ]
-      }
+    clean: {
+      build: [ 'dist/**' ]
     },
 
-    watch: {
-      all: {
-        files: [ 'src/**/*.js', 'test/**/*.js' ],
-        tasks: [ 'build', 'mochaTest' ]
-      }
-    }
-  })
+    eslint: {
+      target: [ 'src/**/*.js' ]
+    },
 
-  var buildTasks = [ 'compile' ]
-  var compileTasks = []
-  var testTasks = [ 'compile', 'mochaTest' ]
-
-  if (semver.satisfies(process.version, '>=0.12')) {
-    commonjs = require('rollup-plugin-commonjs')
-    nodeResolve = require('rollup-plugin-node-resolve')
-    uglify = require('rollup-plugin-uglify')
-
-    compileTasks.push('clean', 'rollup')
-
-    grunt.config.merge({
-      clean: {
-        build: [ 'dist/**' ]
-      },
-
-      rollup: {
-        umdDevelopment: {
-          options: {
-            format: 'umd',
-            moduleId: 'el',
-            moduleName: 'el',
-            sourceMap: true,
-            sourceMapRelativePaths: true,
-            plugins: function() {
-              return [
-                nodeResolve(),
-                commonjs()
-              ]
-            }
-          },
-          files: {
-            'dist/el.js': 'src/el.js'
+    rollup: {
+      umdDevelopment: {
+        options: {
+          format: 'umd',
+          moduleId: 'els',
+          moduleName: 'ELS',
+          sourceMap: true,
+          sourceMapRelativePaths: true,
+          plugins: function() {
+            return [
+              nodeResolve(),
+              commonjs()
+            ];
           }
         },
-        umdProduction: {
-          options: {
-            format: 'umd',
-            moduleId: 'el',
-            moduleName: 'el',
-            sourceMap: true,
-            sourceMapRelativePaths: true,
-            banner: '/*! ELJS v<%= pkg.version %> | (C) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %> | MIT License */',
-            plugins: function() {
-              return [
-                nodeResolve(),
-                commonjs(),
-                uglify({
-                  output: {
-                    comments: function(node, comment) {
-                      return comment.type === 'comment2' && /^\!/.test(comment.value)
-                    }
+        files: {
+          'dist/els.js': 'src/els.js'
+        }
+      },
+      umdProduction: {
+        options: {
+          format: 'umd',
+          moduleId: 'els',
+          moduleName: 'ELS',
+          sourceMap: true,
+          sourceMapRelativePaths: true,
+          banner: '/*! ELS v<%= pkg.version %> | (C) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>, !ninja | <%= pkg.license %> License */',
+          plugins: function() {
+            return [
+              nodeResolve(),
+              commonjs(),
+              uglify({
+                output: {
+                  comments: function(node, comment) {
+                    return comment.type === 'comment2' && /^\!/.test(comment.value);
                   }
-                })
-              ]
-            }
-          },
-          files: {
-            'dist/el.min.js': 'src/el.js'
+                }
+              })
+            ];
           }
+        },
+        files: {
+          'dist/els.min.js': 'src/els.js'
         }
       }
-    })
+    }
+  });
 
-    grunt.loadNpmTasks('grunt-contrib-clean')
-    grunt.loadNpmTasks('grunt-rollup')
-  } else {
-    grunt.log.writeln('"clean" and "rollup" tasks are disabled because Node.js version is <0.12! Please consider upgrading Node.js...')
-  }
+  require('load-grunt-tasks')(grunt);
 
-  if (semver.satisfies(process.version, '>=4')) {
-    buildTasks.unshift('eslint')
-    testTasks.unshift('eslint')
-
-    grunt.config.set('eslint', {
-      target: [ 'src/**/*.js', 'test/**/*.js' ]
-    })
-
-    grunt.loadNpmTasks('grunt-eslint')
-  } else {
-    grunt.log.writeln('"eslint" task is disabled because Node.js version is <4! Please consider upgrading Node.js...')
-  }
-
-  grunt.loadNpmTasks('grunt-contrib-watch')
-  grunt.loadNpmTasks('grunt-mocha-test')
-
-  grunt.registerTask('default', [ 'build' ])
-  grunt.registerTask('build', buildTasks)
-  grunt.registerTask('compile', compileTasks)
-  grunt.registerTask('test', testTasks)
-}
+  grunt.registerTask('default', [ 'ci' ]);
+  grunt.registerTask('build', [ 'eslint', 'clean:build', 'rollup' ]);
+  grunt.registerTask('ci', [ 'eslint', 'clean', 'rollup' ]);
+  grunt.registerTask('test', [ 'eslint' ]);
+};

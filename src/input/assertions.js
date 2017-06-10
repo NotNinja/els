@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 Alasdair Mercer, Skelp
+ * Copyright (C) 2017 Alasdair Mercer, !ninja
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -20,17 +20,17 @@
  * SOFTWARE.
  */
 
-'use strict'
+'use strict';
 
-var Oopsy = require('oopsy')
+var Nevis = require('nevis/lite');
 
-var Lang = require('../lang')
+var Lang = require('../lang');
 
 /**
  * @public
  * @class Assertions
  */
-var Assertions = Oopsy.extend(null, {
+var Assertions = Nevis.extend(null, {
 
   /**
    * @public
@@ -59,27 +59,27 @@ var Assertions = Oopsy.extend(null, {
    * @static
    */
   assertInterpolationSymbols: function(identifier, value, checkBlacklist) {
-    var end
-    var i
-    var regExp
-    var start
+    var end;
+    var i;
+    var regExp;
+    var start;
 
     if (Lang.isPresent(value) && !(Lang.isArray(value) && value.length === 2)) {
-      throw new Error('Expected "' + identifier + '" to be an array, [start, end].')
+      throw new Error('Expected "' + identifier + '" to be an array, [start, end].');
     } else if (checkBlacklist && !Lang.isBlank(value)) {
-      start = value[0]
-      end = value[1]
+      start = value[0];
+      end = value[1];
 
       for (i = 0; i < Assertions.INTERPOLATION_BLACKLIST_REGEXPS.length; i++) {
-        regExp = Assertions.INTERPOLATION_BLACKLIST_REGEXPS[i]
+        regExp = Assertions.INTERPOLATION_BLACKLIST_REGEXPS[i];
 
         if (regExp.test(start) || regExp.test(end)) {
-          throw new Error('["' + start + '", "' + end + '"] contains unusable interpolation symbol.')
+          throw new Error('["' + start + '", "' + end + '"] contains unusable interpolation symbol.');
         }
       }
     }
   }
 
-})
+});
 
-module.exports = Assertions
+module.exports = Assertions;

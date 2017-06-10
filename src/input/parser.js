@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 Alasdair Mercer, Skelp
+ * Copyright (C) 2017 Alasdair Mercer, !ninja
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,16 +22,16 @@
 
 /* eslint "no-constant-condition": "off", "no-shadow": "off", "no-useless-escape": "off" */
 
-'use strict'
+'use strict';
 
-var Oopsy = require('oopsy')
+var Nevis = require('nevis/lite');
 
-var ast = require('./ast')
-var Characters = require('./characters')
-var InterpolationConfig = require('./interpolation-config')
-var Lang = require('../lang')
-var StringWrapper = Lang.StringWrapper
-var lexer = require('./lexer')
+var ast = require('./ast');
+var Characters = require('./characters');
+var InterpolationConfig = require('./interpolation-config');
+var Lang = require('../lang');
+var StringWrapper = Lang.StringWrapper;
+var lexer = require('./lexer');
 
 /**
  * @public
@@ -43,7 +43,7 @@ var SimpleExpressionChecker = ast.ASTVisitor.extend(function() {
    * @public
    * @type {boolean}
    */
-  this.simple = true
+  this.simple = true;
 }, {
 
   /**
@@ -52,13 +52,13 @@ var SimpleExpressionChecker = ast.ASTVisitor.extend(function() {
    * @public
    */
   visitAll: function(asts) {
-    var results = []
+    var results = [];
 
     for (var i = 0; i < asts.length; i++) {
-      results.push(asts[i].visit(this))
+      results.push(asts[i].visit(this));
     }
 
-    return results
+    return results;
   },
 
   /**
@@ -66,7 +66,7 @@ var SimpleExpressionChecker = ast.ASTVisitor.extend(function() {
    * @inheritDoc
    */
   visitBinary: function(ast, context) {
-    this.simple = false
+    this.simple = false;
   },
 
   /**
@@ -74,7 +74,7 @@ var SimpleExpressionChecker = ast.ASTVisitor.extend(function() {
    * @inheritDoc
    */
   visitChain: function(ast, context) {
-    this.simple = false
+    this.simple = false;
   },
 
   /**
@@ -82,7 +82,7 @@ var SimpleExpressionChecker = ast.ASTVisitor.extend(function() {
    * @inheritDoc
    */
   visitConditional: function(ast, context) {
-    this.simple = false
+    this.simple = false;
   },
 
   /**
@@ -90,7 +90,7 @@ var SimpleExpressionChecker = ast.ASTVisitor.extend(function() {
    * @inheritDoc
    */
   visitFunctionCall: function(ast, context) {
-    this.simple = false
+    this.simple = false;
   },
 
   /**
@@ -98,7 +98,7 @@ var SimpleExpressionChecker = ast.ASTVisitor.extend(function() {
    * @inheritDoc
    */
   visitInterpolation: function(ast, context) {
-    this.simple = false
+    this.simple = false;
   },
 
   /**
@@ -106,7 +106,7 @@ var SimpleExpressionChecker = ast.ASTVisitor.extend(function() {
    * @inheritDoc
    */
   visitKeyedRead: function(ast, context) {
-    this.simple = false
+    this.simple = false;
   },
 
   /**
@@ -114,7 +114,7 @@ var SimpleExpressionChecker = ast.ASTVisitor.extend(function() {
    * @inheritDoc
    */
   visitKeyedWrite: function(ast, context) {
-    this.simple = false
+    this.simple = false;
   },
 
   /**
@@ -122,7 +122,7 @@ var SimpleExpressionChecker = ast.ASTVisitor.extend(function() {
    * @inheritDoc
    */
   visitLiteralArray: function(ast, context) {
-    this.visitAll(ast.expressions)
+    this.visitAll(ast.expressions);
   },
 
   /**
@@ -130,7 +130,7 @@ var SimpleExpressionChecker = ast.ASTVisitor.extend(function() {
    * @inheritDoc
    */
   visitLiteralMap: function(ast, context) {
-    this.visitAll(ast.values)
+    this.visitAll(ast.values);
   },
 
   /**
@@ -138,7 +138,7 @@ var SimpleExpressionChecker = ast.ASTVisitor.extend(function() {
    * @inheritDoc
    */
   visitMethodCall: function(ast, context) {
-    this.simple = false
+    this.simple = false;
   },
 
   /**
@@ -146,7 +146,7 @@ var SimpleExpressionChecker = ast.ASTVisitor.extend(function() {
    * @inheritDoc
    */
   visitPipe: function(ast, context) {
-    this.simple = false
+    this.simple = false;
   },
 
   /**
@@ -154,7 +154,7 @@ var SimpleExpressionChecker = ast.ASTVisitor.extend(function() {
    * @inheritDoc
    */
   visitPrefixNot: function(ast, context) {
-    this.simple = false
+    this.simple = false;
   },
 
   /**
@@ -162,7 +162,7 @@ var SimpleExpressionChecker = ast.ASTVisitor.extend(function() {
    * @inheritDoc
    */
   visitPropertyWrite: function(ast, context) {
-    this.simple = false
+    this.simple = false;
   },
 
   /**
@@ -170,7 +170,7 @@ var SimpleExpressionChecker = ast.ASTVisitor.extend(function() {
    * @inheritDoc
    */
   visitQuote: function(ast, context) {
-    this.simple = false
+    this.simple = false;
   },
 
   /**
@@ -178,7 +178,7 @@ var SimpleExpressionChecker = ast.ASTVisitor.extend(function() {
    * @inheritDoc
    */
   visitSafeMethodCall: function(ast, context) {
-    this.simple = false
+    this.simple = false;
   },
 
   /**
@@ -186,7 +186,7 @@ var SimpleExpressionChecker = ast.ASTVisitor.extend(function() {
    * @inheritDoc
    */
   visitSafePropertyRead: function(ast, context) {
-    this.simple = false
+    this.simple = false;
   }
 
 }, {
@@ -197,13 +197,13 @@ var SimpleExpressionChecker = ast.ASTVisitor.extend(function() {
    * @public
    */
   check: function(ast) {
-    var checker = new SimpleExpressionChecker()
-    ast.visit(checker)
+    var checker = new SimpleExpressionChecker();
+    ast.visit(checker);
 
-    return checker.simple
+    return checker.simple;
   }
 
-})
+});
 
 /**
  * @param {string[]} strings
@@ -211,18 +211,18 @@ var SimpleExpressionChecker = ast.ASTVisitor.extend(function() {
  * @public
  * @class SplitInterpolation
  */
-var SplitInterpolation = Oopsy.extend(function(strings, expressions) {
+var SplitInterpolation = Nevis.extend(function(strings, expressions) {
   /**
    * @public
    * @type {string[]}
    */
-  this.strings = strings
+  this.strings = strings;
   /**
    * @public
    * @type {string[]}
    */
-  this.expressions = expressions
-})
+  this.expressions = expressions;
+});
 
 /**
  * @param {TemplateBinding[]} templateBindings -
@@ -231,23 +231,23 @@ var SplitInterpolation = Oopsy.extend(function(strings, expressions) {
  * @public
  * @class TemplateBindingParseResult
  */
-var TemplateBindingParseResult = Oopsy.extend(function(templateBindings, warnings, errors) {
+var TemplateBindingParseResult = Nevis.extend(function(templateBindings, warnings, errors) {
   /**
    * @public
    * @type {TemplateBinding[]}
    */
-  this.templateBindings = templateBindings
+  this.templateBindings = templateBindings;
   /**
    * @public
    * @type {string[]}
    */
-  this.warnings = warnings
+  this.warnings = warnings;
   /**
    * @public
    * @type {ParserError[]}
    */
-  this.errors = errors
-})
+  this.errors = errors;
+});
 
 /**
  * @param {string} input
@@ -258,52 +258,52 @@ var TemplateBindingParseResult = Oopsy.extend(function(templateBindings, warning
  * @public
  * @class ParserAST
  */
-var ParserAST = Oopsy.extend(function(input, location, tokens, parseAction, errors) {
+var ParserAST = Nevis.extend(function(input, location, tokens, parseAction, errors) {
   /**
    * @public
    * @type {string}
    */
-  this.input = input
+  this.input = input;
   /**
    * @public
    * @type {*}
    */
-  this.location = location
+  this.location = location;
   /**
    * @public
    * @type {Array}
    */
-  this.tokens = tokens
+  this.tokens = tokens;
   /**
    * @public
    * @type {boolean}
    */
-  this.parseAction = parseAction
+  this.parseAction = parseAction;
   /**
    * @private
    * @type {ParserError[]}
    */
-  this._errors = errors
+  this._errors = errors;
   /**
    * @public
    * @type {number}
    */
-  this.index = 0
+  this.index = 0;
   /**
    * @private
    * @type {number}
    */
-  this._rightParenthesisExpected = 0
+  this._rightParenthesisExpected = 0;
   /**
    * @private
    * @type {number}
    */
-  this._rightBracesExpected = 0
+  this._rightBracesExpected = 0;
   /**
    * @private
    * @type {number}
    */
-  this._rightBracketsExpected = 0
+  this._rightBracketsExpected = 0;
 }, {
 
   // TODO: Complete
@@ -313,7 +313,7 @@ var ParserAST = Oopsy.extend(function(input, location, tokens, parseAction, erro
    * @public
    */
   advance: function() {
-    this.index++
+    this.index++;
   },
 
   /**
@@ -323,9 +323,9 @@ var ParserAST = Oopsy.extend(function(input, location, tokens, parseAction, erro
    * @public
    */
   error: function(message, index) {
-    this._errors.push(new ast.ParserError(message, this.input, this._locationText(index), this.location))
+    this._errors.push(new ast.ParserError(message, this.input, this._locationText(index), this.location));
 
-    this._skip()
+    this._skip();
   },
 
   /**
@@ -335,10 +335,10 @@ var ParserAST = Oopsy.extend(function(input, location, tokens, parseAction, erro
    */
   expectCharacter: function(code) {
     if (this.optionalCharacter(code)) {
-      return
+      return;
     }
 
-    this.error('Missing expected ' + StringWrapper.fromCharCode(code))
+    this.error('Missing expected ' + StringWrapper.fromCharCode(code));
   },
 
   /**
@@ -346,17 +346,17 @@ var ParserAST = Oopsy.extend(function(input, location, tokens, parseAction, erro
    * @public
    */
   expectIdentifierOrKeyword: function() {
-    var next = this.next()
+    var next = this.next();
 
     if (!next.isIdentifier() && !next.isKeyword()) {
-      this.error('Unexpected token ' + next + ', expected identifier or keyword')
+      this.error('Unexpected token ' + next + ', expected identifier or keyword');
 
-      return ''
+      return '';
     }
 
-    this.advance()
+    this.advance();
 
-    return next.toString()
+    return next.toString();
   },
 
   /**
@@ -364,17 +364,17 @@ var ParserAST = Oopsy.extend(function(input, location, tokens, parseAction, erro
    * @public
    */
   expectIdentifierOrKeywordOrString: function() {
-    var next = this.next()
+    var next = this.next();
 
     if (!next.isIdentifier() && !next.isKeyword() && !next.isString()) {
-      this.error('Unexpected token ' + next + ', expected identifier, keyword, or string')
+      this.error('Unexpected token ' + next + ', expected identifier, keyword, or string');
 
-      return ''
+      return '';
     }
 
-    this.advance()
+    this.advance();
 
-    return next.toString()
+    return next.toString();
   },
 
   /**
@@ -384,10 +384,10 @@ var ParserAST = Oopsy.extend(function(input, location, tokens, parseAction, erro
    */
   expectOperator: function(operator) {
     if (this.optionalOperator(operator)) {
-      return
+      return;
     }
 
-    this.error('Missing expected operator ' + operator)
+    this.error('Missing expected operator ' + operator);
   },
 
   /**
@@ -395,18 +395,18 @@ var ParserAST = Oopsy.extend(function(input, location, tokens, parseAction, erro
    * @public
    */
   expectTemplateBindingKey: function() {
-    var operatorFound = false
-    var result = ''
+    var operatorFound = false;
+    var result = '';
 
     do {
-      result += this.expectIdentifierOrKeywordOrString()
-      operatorFound = this.optionalOperator('-')
+      result += this.expectIdentifierOrKeywordOrString();
+      operatorFound = this.optionalOperator('-');
       if (operatorFound) {
-        result += '-'
+        result += '-';
       }
-    } while (operatorFound)
+    } while (operatorFound);
 
-    return result.toString()
+    return result.toString();
   },
 
   /**
@@ -414,7 +414,7 @@ var ParserAST = Oopsy.extend(function(input, location, tokens, parseAction, erro
    * @public
    */
   inputIndex: function() {
-    return this.index < this.tokens.length ? this.next().index : this.input.length
+    return this.index < this.tokens.length ? this.next().index : this.input.length;
   },
 
   /**
@@ -422,7 +422,7 @@ var ParserAST = Oopsy.extend(function(input, location, tokens, parseAction, erro
    * @public
    */
   next: function() {
-    return this.peek(0)
+    return this.peek(0);
   },
 
   /**
@@ -432,11 +432,11 @@ var ParserAST = Oopsy.extend(function(input, location, tokens, parseAction, erro
    */
   optionalCharacter: function(code) {
     if (this.next().isCharacter(code)) {
-      this.advance()
-      return true
+      this.advance();
+      return true;
     }
 
-    return false
+    return false;
   },
 
   /**
@@ -446,11 +446,11 @@ var ParserAST = Oopsy.extend(function(input, location, tokens, parseAction, erro
    */
   optionalOperator: function(operator) {
     if (this.next().isOperator(operator)) {
-      this.advance()
-      return true
+      this.advance();
+      return true;
     }
 
-    return false
+    return false;
   },
 
   /**
@@ -460,46 +460,44 @@ var ParserAST = Oopsy.extend(function(input, location, tokens, parseAction, erro
    * @public
    */
   parseAccessMemberOrMethodCall: function(receiver, isSafe) {
-    var chars = Characters.chars
-    var args
-    var span
-    var value
-    var start = receiver.span.start
-    var id = this.expectIdentifierOrKeyword()
+    var chars = Characters.chars;
+    var args;
+    var span;
+    var value;
+    var start = receiver.span.start;
+    var id = this.expectIdentifierOrKeyword();
 
     if (this.optionalCharacter(chars.$LPAREN)) {
-      this._rightParenthesisExpected++
+      this._rightParenthesisExpected++;
 
-      args = this.parseCallArguments()
+      args = this.parseCallArguments();
 
-      this.expectCharacter(chars.$RPAREN)
+      this.expectCharacter(chars.$RPAREN);
 
-      this._rightParenthesisExpected--
+      this._rightParenthesisExpected--;
 
-      span = this.span(start)
+      span = this.span(start);
 
-      return isSafe ? new ast.SafeMethodCall(span, receiver, id, args) : new ast.MethodCall(span, receiver, id, args)
+      return isSafe ? new ast.SafeMethodCall(span, receiver, id, args) : new ast.MethodCall(span, receiver, id, args);
     } else if (isSafe) {
       if (this.optionalOperator('=')) {
-        this.error('The \'?.\' operator cannot be used in the assignment')
+        this.error('The \'?.\' operator cannot be used in the assignment');
 
-        return new ast.EmptyExpression(this.span(start))
-      } else {
-        return new ast.SafePropertyRead(this.span(start), receiver, id)
+        return new ast.EmptyExpression(this.span(start));
       }
+      return new ast.SafePropertyRead(this.span(start), receiver, id);
     } else if (this.optionalOperator('=')) {
       if (!this.parseAction) {
-        this.error('Bindings cannot contain assignments')
+        this.error('Bindings cannot contain assignments');
 
-        return new ast.EmptyExpression(this.span(start))
+        return new ast.EmptyExpression(this.span(start));
       }
 
-      value = this.parseConditional()
+      value = this.parseConditional();
 
-      return new ast.PropertyWrite(this.span(start), receiver, id, value)
-    } else {
-      return new ast.PropertyRead(this.span(start), receiver, id)
+      return new ast.PropertyWrite(this.span(start), receiver, id, value);
     }
+    return new ast.PropertyRead(this.span(start), receiver, id);
   },
 
   /**
@@ -507,25 +505,25 @@ var ParserAST = Oopsy.extend(function(input, location, tokens, parseAction, erro
    * @public
    */
   parseAdditive: function() {
-    var operator
-    var right
-    var result = this.parseMultiplicative()
+    var operator;
+    var right;
+    var result = this.parseMultiplicative();
 
     while (this.next().type === lexer.TokenType.Operator) {
-      operator = this.next().stringValue
+      operator = this.next().stringValue;
 
       switch (operator) {
       case '+':
       case '-':
-        this.advance()
-        right = this.parseMultiplicative()
-        result = new ast.Binary(this.span(result.span.start), operator, result, right)
-        continue
+        this.advance();
+        right = this.parseMultiplicative();
+        result = new ast.Binary(this.span(result.span.start), operator, result, right);
+        continue;
       }
-      break
+      break;
     }
 
-    return result
+    return result;
   },
 
   /**
@@ -533,19 +531,19 @@ var ParserAST = Oopsy.extend(function(input, location, tokens, parseAction, erro
    * @public
    */
   parseCallArguments: function() {
-    var chars = Characters.chars
+    var chars = Characters.chars;
 
     if (this.next().isCharacter(chars.$RPAREN)) {
-      return []
+      return [];
     }
 
-    var positionals = []
+    var positionals = [];
 
     do {
-      positionals.push(this.parsePipe())
-    } while (this.optionalCharacter(chars.$COMMA))
+      positionals.push(this.parsePipe());
+    } while (this.optionalCharacter(chars.$COMMA));
 
-    return positionals
+    return positionals;
   },
 
   /**
@@ -553,44 +551,44 @@ var ParserAST = Oopsy.extend(function(input, location, tokens, parseAction, erro
    * @public
    */
   parseCallChain: function() {
-    var chars = Characters.chars
-    var args
-    var key
-    var value
-    var result = this.parsePrimary()
+    var chars = Characters.chars;
+    var args;
+    var key;
+    var value;
+    var result = this.parsePrimary();
 
     while (true) {
       if (this.optionalCharacter(chars.$PERIOD)) {
-        result = this.parseAccessMemberOrMethodCall(result, false)
+        result = this.parseAccessMemberOrMethodCall(result, false);
       } else if (this.optionalOperator('?.')) {
-        result = this.parseAccessMemberOrMethodCall(result, true)
+        result = this.parseAccessMemberOrMethodCall(result, true);
       } else if (this.optionalCharacter(chars.$LBRACKET)) {
-        this._rightBracketsExpected++
+        this._rightBracketsExpected++;
 
-        key = this.parsePipe()
+        key = this.parsePipe();
 
-        this._rightBracketsExpected--
+        this._rightBracketsExpected--;
 
-        this.expectCharacter(chars.$RBRACKET)
+        this.expectCharacter(chars.$RBRACKET);
 
         if (this.optionalOperator('=')) {
-          value = this.parseConditional()
-          result = new ast.KeyedWrite(this.span(result.span.start), result, key, value)
+          value = this.parseConditional();
+          result = new ast.KeyedWrite(this.span(result.span.start), result, key, value);
         } else {
-          result = new ast.KeyedRead(this.span(result.span.start), result, key)
+          result = new ast.KeyedRead(this.span(result.span.start), result, key);
         }
       } else if (this.optionalCharacter(chars.$LPAREN)) {
-        this._rightParenthesisExpected++
+        this._rightParenthesisExpected++;
 
-        args = this.parseCallArguments()
+        args = this.parseCallArguments();
 
-        this._rightParenthesisExpected--
+        this._rightParenthesisExpected--;
 
-        this.expectCharacter(chars.$RPAREN)
+        this.expectCharacter(chars.$RPAREN);
 
-        result = new ast.FunctionCall(this.span(result.span.start), result, args)
+        result = new ast.FunctionCall(this.span(result.span.start), result, args);
       } else {
-        return result
+        return result;
       }
     }
   },
@@ -600,35 +598,35 @@ var ParserAST = Oopsy.extend(function(input, location, tokens, parseAction, erro
    * @public
    */
   parseChain: function() {
-    var chars = Characters.chars
-    var expression
-    var expressions = []
-    var start = this.inputIndex()
+    var chars = Characters.chars;
+    var expression;
+    var expressions = [];
+    var start = this.inputIndex();
 
     while (this.index < this.tokens.length) {
-      expression = this.parsePipe()
-      expressions.push(expression)
+      expression = this.parsePipe();
+      expressions.push(expression);
 
       if (this.optionalCharacter(chars.$SEMICOLON)) {
         if (!this.parseAction) {
-          this.error('Binding expression cannot contain chained expression')
+          this.error('Binding expression cannot contain chained expression');
         }
 
         while (this.optionalCharacter(chars.$SEMICOLON)) {
           // read all semicolons
         }
       } else if (this.index < this.tokens.length) {
-        this.error('Unexpected token "' + this.next() + '"')
+        this.error('Unexpected token "' + this.next() + '"');
       }
     }
 
     if (expressions.length === 0) {
-      return new ast.EmptyExpression(this.span(start))
+      return new ast.EmptyExpression(this.span(start));
     }
     if (expressions.length === 1) {
-      return expressions[0]
+      return expressions[0];
     }
-    return new ast.Chain(this.span(start), expressions)
+    return new ast.Chain(this.span(start), expressions);
   },
 
   /**
@@ -636,31 +634,31 @@ var ParserAST = Oopsy.extend(function(input, location, tokens, parseAction, erro
    * @public
    */
   parseConditional: function() {
-    var end
-    var expression
-    var no
-    var yes
-    var start = this.inputIndex()
-    var result = this.parseLogicalOr()
+    var end;
+    var expression;
+    var no;
+    var yes;
+    var start = this.inputIndex();
+    var result = this.parseLogicalOr();
 
     if (this.optionalOperator('?')) {
-      yes = this.parsePipe()
+      yes = this.parsePipe();
 
       if (!this.optionalCharacter(Characters.chars.$COLON)) {
-        end = this.inputIndex()
-        expression = this.input.substring(start, end)
+        end = this.inputIndex();
+        expression = this.input.substring(start, end);
 
-        this.error('Conditional expression ' + expression + ' requires all 3 expressions')
+        this.error('Conditional expression ' + expression + ' requires all 3 expressions');
 
-        no = new ast.EmptyExpression(this.span(start))
+        no = new ast.EmptyExpression(this.span(start));
       } else {
-        no = this.parsePipe()
+        no = this.parsePipe();
       }
 
-      return new ast.Conditional(this.span(start), result, yes, no)
+      return new ast.Conditional(this.span(start), result, yes, no);
     }
 
-    return result
+    return result;
   },
 
   /**
@@ -668,7 +666,7 @@ var ParserAST = Oopsy.extend(function(input, location, tokens, parseAction, erro
    * @public
    */
   parseExpression: function() {
-    return this.parseConditional()
+    return this.parseConditional();
   },
 
   /**
@@ -677,15 +675,15 @@ var ParserAST = Oopsy.extend(function(input, location, tokens, parseAction, erro
    * @public
    */
   parseExpressionList: function(terminator) {
-    var result = []
+    var result = [];
 
     if (!this.next().isCharacter(terminator)) {
       do {
-        result.push(this.parsePipe())
-      } while (this.optionalCharacter(Characters.chars.$COMMA))
+        result.push(this.parsePipe());
+      } while (this.optionalCharacter(Characters.chars.$COMMA));
     }
 
-    return result
+    return result;
   },
 
   /**
@@ -693,27 +691,27 @@ var ParserAST = Oopsy.extend(function(input, location, tokens, parseAction, erro
    * @public
    */
   parseEquality: function() {
-    var operator
-    var right
-    var result = this.parseRelational()
+    var operator;
+    var right;
+    var result = this.parseRelational();
 
     while (this.next().type === lexer.TokenType.Operator) {
-      operator = this.next().stringValue
+      operator = this.next().stringValue;
 
       switch (operator) {
       case '==':
       case '===':
       case '!=':
       case '!==':
-        this.advance()
-        right = this.parseRelational()
-        result = new ast.Binary(this.span(result.span.start), operator, result, right)
-        continue
+        this.advance();
+        right = this.parseRelational();
+        result = new ast.Binary(this.span(result.span.start), operator, result, right);
+        continue;
       }
-      break
+      break;
     }
 
-    return result
+    return result;
   },
 
   /**
@@ -721,31 +719,31 @@ var ParserAST = Oopsy.extend(function(input, location, tokens, parseAction, erro
    * @public
    */
   parseLiteralMap: function() {
-    var chars = Characters.chars
-    var key
-    var keys = []
-    var values = []
-    var start = this.inputIndex()
+    var chars = Characters.chars;
+    var key;
+    var keys = [];
+    var values = [];
+    var start = this.inputIndex();
 
-    this.expectCharacter(chars.$LBRACE)
+    this.expectCharacter(chars.$LBRACE);
 
     if (!this.optionalCharacter(chars.$RBRACE)) {
-      this._rightBracesExpected++
+      this._rightBracesExpected++;
 
       do {
-        key = this.expectIdentifierOrKeywordOrString()
-        keys.push(key)
+        key = this.expectIdentifierOrKeywordOrString();
+        keys.push(key);
 
-        this.expectCharacter(chars.$COLON)
+        this.expectCharacter(chars.$COLON);
 
-        values.push(this.parsePipe())
-      } while (this.optionalCharacter(chars.$COMMA))
-      this._rightBracesExpected--
+        values.push(this.parsePipe());
+      } while (this.optionalCharacter(chars.$COMMA));
+      this._rightBracesExpected--;
 
-      this.expectCharacter(chars.$RBRACE)
+      this.expectCharacter(chars.$RBRACE);
     }
 
-    return new ast.LiteralMap(this.span(start), keys, values)
+    return new ast.LiteralMap(this.span(start), keys, values);
   },
 
   /**
@@ -753,15 +751,15 @@ var ParserAST = Oopsy.extend(function(input, location, tokens, parseAction, erro
    * @public
    */
   parseLogicalAnd: function() {
-    var right
-    var result = this.parseEquality()
+    var right;
+    var result = this.parseEquality();
 
     while (this.optionalOperator('&&')) {
-      right = this.parseEquality()
-      result = new ast.Binary(this.span(result.span.start), '&&', result, right)
+      right = this.parseEquality();
+      result = new ast.Binary(this.span(result.span.start), '&&', result, right);
     }
 
-    return result
+    return result;
   },
 
   /**
@@ -769,15 +767,15 @@ var ParserAST = Oopsy.extend(function(input, location, tokens, parseAction, erro
    * @public
    */
   parseLogicalOr: function() {
-    var right
-    var result = this.parseLogicalAnd()
+    var right;
+    var result = this.parseLogicalAnd();
 
     while (this.optionalOperator('||')) {
-      right = this.parseLogicalAnd()
-      result = new ast.Binary(this.span(result.span.start), '||', result, right)
+      right = this.parseLogicalAnd();
+      result = new ast.Binary(this.span(result.span.start), '||', result, right);
     }
 
-    return result
+    return result;
   },
 
   /**
@@ -785,26 +783,26 @@ var ParserAST = Oopsy.extend(function(input, location, tokens, parseAction, erro
    * @public
    */
   parseMultiplicative: function() {
-    var operator
-    var right
-    var result = this.parsePrefix()
+    var operator;
+    var right;
+    var result = this.parsePrefix();
 
     while (this.next().type === lexer.TokenType.Operator) {
-      operator = this.next().stringValue
+      operator = this.next().stringValue;
 
       switch (operator) {
       case '*':
       case '%':
       case '/':
-        this.advance()
-        right = this.parsePrefix()
-        result = new ast.Binary(this.span(result.span.start), operator, result, right)
-        continue
+        this.advance();
+        right = this.parsePrefix();
+        result = new ast.Binary(this.span(result.span.start), operator, result, right);
+        continue;
       }
-      break
+      break;
     }
 
-    return result
+    return result;
   },
 
   /**
@@ -812,28 +810,28 @@ var ParserAST = Oopsy.extend(function(input, location, tokens, parseAction, erro
    * @public
    */
   parsePipe: function() {
-    var args
-    var name
-    var result = this.parseExpression()
+    var args;
+    var name;
+    var result = this.parseExpression();
 
     if (this.optionalOperator('|')) {
       if (this.parseAction) {
-        this.error('Cannot have a pipe in an action expression')
+        this.error('Cannot have a pipe in an action expression');
       }
 
       do {
-        args = []
-        name = this.expectIdentifierOrKeyword()
+        args = [];
+        name = this.expectIdentifierOrKeyword();
 
         while (this.optionalCharacter(Characters.chars.$COLON)) {
-          args.push(this.parseExpression())
+          args.push(this.parseExpression());
         }
 
-        result = new ast.BindingPipe(this.span(result.span.start), result, name, args)
-      } while (this.optionalOperator('|'))
+        result = new ast.BindingPipe(this.span(result.span.start), result, name, args);
+      } while (this.optionalOperator('|'));
     }
 
-    return result
+    return result;
   },
 
   /**
@@ -841,31 +839,31 @@ var ParserAST = Oopsy.extend(function(input, location, tokens, parseAction, erro
    * @public
    */
   parsePrefix: function() {
-    var operator
-    var result
-    var start
+    var operator;
+    var result;
+    var start;
 
     if (this.next().type === lexer.TokenType.Operator) {
-      start = this.inputIndex()
-      operator = this.next().stringValue
+      start = this.inputIndex();
+      operator = this.next().stringValue;
 
       switch (operator) {
       case '+':
-        this.advance()
-        return this.parsePrefix()
+        this.advance();
+        return this.parsePrefix();
       case '-':
-        this.advance()
-        result = this.parsePrefix()
+        this.advance();
+        result = this.parsePrefix();
         return new ast.Binary(this.span(start), operator, new ast.LiteralPrimitive(new ast.ParseSpan(start, start), 0),
-          result)
+          result);
       case '!':
-        this.advance()
-        result = this.parsePrefix()
-        return new ast.PrefixNot(this.span(start), result)
+        this.advance();
+        result = this.parsePrefix();
+        return new ast.PrefixNot(this.span(start), result);
       }
     }
 
-    return this.parseCallChain()
+    return this.parseCallChain();
   },
 
   /**
@@ -873,77 +871,76 @@ var ParserAST = Oopsy.extend(function(input, location, tokens, parseAction, erro
    * @public
    */
   parsePrimary: function() {
-    var chars = Characters.chars
-    var elements
-    var result
-    var value
-    var start = this.inputIndex()
+    var chars = Characters.chars;
+    var elements;
+    var result;
+    var value;
+    var start = this.inputIndex();
 
     if (this.optionalCharacter(chars.$LPAREN)) {
-      this._rightParenthesisExpected++
+      this._rightParenthesisExpected++;
 
-      result = this.parsePipe()
+      result = this.parsePipe();
 
-      this._rightParenthesisExpected--
+      this._rightParenthesisExpected--;
 
-      this.expectCharacter(chars.$RPAREN)
+      this.expectCharacter(chars.$RPAREN);
 
-      return result
+      return result;
     } else if (this.next().isKeywordNull()) {
-      this.advance()
+      this.advance();
 
-      return new ast.LiteralPrimitive(this.span(start), null)
+      return new ast.LiteralPrimitive(this.span(start), null);
     } else if (this.next().isKeywordUndefined()) {
-      this.advance()
+      this.advance();
 
-      return new ast.LiteralPrimitive(this.span(start), undefined)
+      return new ast.LiteralPrimitive(this.span(start), undefined);
     } else if (this.next().isKeywordTrue()) {
-      this.advance()
+      this.advance();
 
-      return new ast.LiteralPrimitive(this.span(start), true)
+      return new ast.LiteralPrimitive(this.span(start), true);
     } else if (this.next().isKeywordFalse()) {
-      this.advance()
+      this.advance();
 
-      return new ast.LiteralPrimitive(this.span(start), false)
+      return new ast.LiteralPrimitive(this.span(start), false);
     } else if (this.next().isKeywordThis()) {
-      this.advance()
+      this.advance();
 
-      return new ast.ImplicitReceiver(this.span(start))
+      return new ast.ImplicitReceiver(this.span(start));
     } else if (this.optionalCharacter(chars.$LBRACKET)) {
-      this._rightBracketsExpected++
+      this._rightBracketsExpected++;
 
-      elements = this.parseExpressionList(chars.$RBRACKET)
+      elements = this.parseExpressionList(chars.$RBRACKET);
 
-      this._rightBracketsExpected--
+      this._rightBracketsExpected--;
 
-      this.expectCharacter(chars.$RBRACKET)
+      this.expectCharacter(chars.$RBRACKET);
 
-      return new ast.LiteralArray(this.span(start), elements)
+      return new ast.LiteralArray(this.span(start), elements);
     } else if (this.next().isCharacter(chars.$LBRACE)) {
-      return this.parseLiteralMap()
+      return this.parseLiteralMap();
     } else if (this.next().isIdentifier()) {
-      return this.parseAccessMemberOrMethodCall(new ast.ImplicitReceiver(this.span(start)), false)
+      return this.parseAccessMemberOrMethodCall(new ast.ImplicitReceiver(this.span(start)), false);
     } else if (this.next().isNumber()) {
-      value = this.next().toNumber()
+      value = this.next().toNumber();
 
-      this.advance()
+      this.advance();
 
-      return new ast.LiteralPrimitive(this.span(start), value)
+      return new ast.LiteralPrimitive(this.span(start), value);
     } else if (this.next().isString()) {
-      value = this.next().toString()
+      value = this.next().toString();
 
-      this.advance()
+      this.advance();
 
-      return new ast.LiteralPrimitive(this.span(start), value)
+      return new ast.LiteralPrimitive(this.span(start), value);
     } else if (this.index >= this.tokens.length) {
-      this.error('Unexpected end of expression: ' + this.input)
+      this.error('Unexpected end of expression: ' + this.input);
 
-      return new ast.EmptyExpression(this.span(start))
-    } else {
-      this.error('Unexpected token ' + this.next())
-
-      return new ast.EmptyExpression(this.span(start))
+      return new ast.EmptyExpression(this.span(start));
     }
+    this.error('Unexpected token ' + this.next());
+
+    return new ast.EmptyExpression(this.span(start));
   },
 
   /**
@@ -951,27 +948,27 @@ var ParserAST = Oopsy.extend(function(input, location, tokens, parseAction, erro
    * @public
    */
   parseRelational: function() {
-    var operator
-    var right
-    var result = this.parseAdditive()
+    var operator;
+    var right;
+    var result = this.parseAdditive();
 
     while (this.next().type === lexer.TokenType.Operator) {
-      operator = this.next().stringValue
+      operator = this.next().stringValue;
 
       switch (operator) {
       case '<':
       case '>':
       case '<=':
       case '>=':
-        this.advance()
-        right = this.parseAdditive()
-        result = new ast.Binary(this.span(result.span.start), operator, result, right)
-        continue
+        this.advance();
+        right = this.parseAdditive();
+        result = new ast.Binary(this.span(result.span.start), operator, result, right);
+        continue;
       }
-      break
+      break;
     }
 
-    return result
+    return result;
   },
 
   /**
@@ -979,61 +976,61 @@ var ParserAST = Oopsy.extend(function(input, location, tokens, parseAction, erro
    * @public
    */
   parseTemplateBindings: function() {
-    var chars = Characters.chars
-    var expression
-    var key
-    var keyIsVar
-    var name
-    var pipeAst
-    var source
-    var start
-    var bindings = []
-    var prefix = null
-    var warnings = []
+    var chars = Characters.chars;
+    var expression;
+    var key;
+    var keyIsVar;
+    var name;
+    var pipeAst;
+    var source;
+    var start;
+    var bindings = [];
+    var prefix = null;
+    var warnings = [];
 
     while (this.index < this.tokens.length) {
-      keyIsVar = this.peekKeywordLet()
+      keyIsVar = this.peekKeywordLet();
 
       if (keyIsVar) {
-        this.advance()
+        this.advance();
       }
 
-      key = this.expectTemplateBindingKey()
+      key = this.expectTemplateBindingKey();
 
       if (!keyIsVar) {
         if (prefix == null) {
-          prefix = key
+          prefix = key;
         } else {
-          key = prefix + key[0].toUpperCase() + key.substring(1)
+          key = prefix + key[0].toUpperCase() + key.substring(1);
         }
       }
 
-      this.optionalCharacter(chars.$COLON)
+      this.optionalCharacter(chars.$COLON);
 
-      expression = null
-      name = null
+      expression = null;
+      name = null;
 
       if (keyIsVar) {
         if (this.optionalOperator('=')) {
-          name = this.expectTemplateBindingKey()
+          name = this.expectTemplateBindingKey();
         } else {
-          name = '\$implicit'
+          name = '\$implicit';
         }
       } else if (this.next() !== lexer.EOF && !this.peekKeywordLet()) {
-        start = this.inputIndex()
-        pipeAst = this.parsePipe()
-        source = this.input.substring(start, this.inputIndex())
-        expression = new ast.ASTWithSource(pipeAst, source, this.location, this._errors)
+        start = this.inputIndex();
+        pipeAst = this.parsePipe();
+        source = this.input.substring(start, this.inputIndex());
+        expression = new ast.ASTWithSource(pipeAst, source, this.location, this._errors);
       }
 
-      bindings.push(new ast.TemplateBinding(key, keyIsVar, name, expression))
+      bindings.push(new ast.TemplateBinding(key, keyIsVar, name, expression));
 
       if (!this.optionalCharacter(chars.$SEMICOLON)) {
-        this.optionalCharacter(chars.$COMMA)
+        this.optionalCharacter(chars.$COMMA);
       }
     }
 
-    return new TemplateBindingParseResult(bindings, warnings, this._errors)
+    return new TemplateBindingParseResult(bindings, warnings, this._errors);
   },
 
   /**
@@ -1042,8 +1039,8 @@ var ParserAST = Oopsy.extend(function(input, location, tokens, parseAction, erro
    * @public
    */
   peek: function(offset) {
-    var index = this.index + offset
-    return index < this.tokens.length ? this.tokens[index] : lexer.EOF
+    var index = this.index + offset;
+    return index < this.tokens.length ? this.tokens[index] : lexer.EOF;
   },
 
   /**
@@ -1051,7 +1048,7 @@ var ParserAST = Oopsy.extend(function(input, location, tokens, parseAction, erro
    * @public
    */
   peekKeywordLet: function() {
-    return this.next().isKeywordLet()
+    return this.next().isKeywordLet();
   },
 
   /**
@@ -1060,7 +1057,7 @@ var ParserAST = Oopsy.extend(function(input, location, tokens, parseAction, erro
    * @public
    */
   span: function(start) {
-    return new ast.ParseSpan(start, this.inputIndex())
+    return new ast.ParseSpan(start, this.inputIndex());
   },
 
   /**
@@ -1070,11 +1067,11 @@ var ParserAST = Oopsy.extend(function(input, location, tokens, parseAction, erro
    */
   _locationText: function(index) {
     if (Lang.isBlank(index)) {
-      index = this.index
+      index = this.index;
     }
 
     return index < this.tokens.length ? 'at column ' + (this.tokens[index].index + 1) + ' in'
-      : 'at the end of the expression'
+      : 'at the end of the expression';
   },
 
   /**
@@ -1082,41 +1079,41 @@ var ParserAST = Oopsy.extend(function(input, location, tokens, parseAction, erro
    * @private
    */
   _skip: function() {
-    var chars = Characters.chars
-    var next = this.next()
+    var chars = Characters.chars;
+    var next = this.next();
 
     while (this.index < this.tokens.length && !next.isCharacter(chars.$SEMICOLON) &&
     (this._rightParenthesisExpected <= 0 || !next.isCharacter(chars.$RPAREN)) &&
     (this._rightBracesExpected <= 0 || !next.isCharacter(chars.$RBRACE)) &&
     (this._rightBracketsExpected <= 0 || !next.isCharacter(chars.$RBRACKET))) {
       if (this.next().isError()) {
-        this._errors.push(new ast.ParserError(this.next().toString(), this.input, this._locationText(), this.location))
+        this._errors.push(new ast.ParserError(this.next().toString(), this.input, this._locationText(), this.location));
       }
 
-      this.advance()
+      this.advance();
 
-      next = this.next()
+      next = this.next();
     }
   }
 
-})
+});
 
 /**
  * @param {Lexer} lexer
  * @public
  * @class Parser
  */
-var Parser = Oopsy.extend(function(lexer) {
+var Parser = Nevis.extend(function(lexer) {
   /**
    * @private
    * @type {Lexer}
    */
-  this._lexer = lexer
+  this._lexer = lexer;
   /**
    * @public
    * @type {ParserError[]}
    */
-  this._errors = []
+  this._errors = [];
 }, {
 
   /**
@@ -1128,15 +1125,15 @@ var Parser = Oopsy.extend(function(lexer) {
    */
   parseAction: function(input, location, interpolationConfig) {
     if (interpolationConfig == null) {
-      interpolationConfig = InterpolationConfig.DEFAULT_INTERPOLATION_CONFIG
+      interpolationConfig = InterpolationConfig.DEFAULT_INTERPOLATION_CONFIG;
     }
 
-    this._checkNoInterpolation(input, location, interpolationConfig)
+    this._checkNoInterpolation(input, location, interpolationConfig);
 
-    var tokens = this._lexer.tokenize(this._stripComments(input))
-    var parserAst = new ParserAST(input, location, tokens, true, this._errors).parseChain()
+    var tokens = this._lexer.tokenize(this._stripComments(input));
+    var parserAst = new ParserAST(input, location, tokens, true, this._errors).parseChain();
 
-    return new ast.ASTWithSource(parserAst, input, location, this._errors)
+    return new ast.ASTWithSource(parserAst, input, location, this._errors);
   },
 
   /**
@@ -1148,12 +1145,12 @@ var Parser = Oopsy.extend(function(lexer) {
    */
   parseBinding: function(input, location, interpolationConfig) {
     if (interpolationConfig == null) {
-      interpolationConfig = InterpolationConfig.DEFAULT_INTERPOLATION_CONFIG
+      interpolationConfig = InterpolationConfig.DEFAULT_INTERPOLATION_CONFIG;
     }
 
-    var parserAst = this._parseBindingAST(input, location, interpolationConfig)
+    var parserAst = this._parseBindingAST(input, location, interpolationConfig);
 
-    return new ast.ASTWithSource(parserAst, input, location, this._errors)
+    return new ast.ASTWithSource(parserAst, input, location, this._errors);
   },
 
   /**
@@ -1164,25 +1161,26 @@ var Parser = Oopsy.extend(function(lexer) {
    * @public
    */
   parseInterpolation: function(input, location, interpolationConfig) {
-    var split = this.splitInterpolation(input, location, interpolationConfig)
+    var split = this.splitInterpolation(input, location, interpolationConfig);
     if (split == null) {
-      return null
+      return null;
     }
 
-    var parserAst
-    var tokens
-    var expressions = []
+    var parserAst;
+    var tokens;
+    var expressions = [];
 
     for (var i = 0; i < split.expressions.length; ++i) {
-      tokens = this._lexer.tokenize(this._stripComments(split.expressions[i]))
-      parserAst = new ParserAST(input, location, tokens, false, this._errors).parseChain()
+      tokens = this._lexer.tokenize(this._stripComments(split.expressions[i]));
+      parserAst = new ParserAST(input, location, tokens, false, this._errors).parseChain();
 
-      expressions.push(parserAst)
+      expressions.push(parserAst);
     }
 
-    var span = new ast.ParseSpan(0, Lang.isBlank(input) ? 0 : input.length)
+    var span = new ast.ParseSpan(0, Lang.isBlank(input) ? 0 : input.length);
 
-    return new ast.ASTWithSource(new ast.Interpolation(span, split.strings, expressions), input, location, this._errors)
+    return new ast.ASTWithSource(new ast.Interpolation(span, split.strings, expressions), input, location,
+        this._errors);
   },
 
   /**
@@ -1194,16 +1192,16 @@ var Parser = Oopsy.extend(function(lexer) {
    */
   parseSimpleBinding: function(input, location, interpolationConfig) {
     if (interpolationConfig == null) {
-      interpolationConfig = InterpolationConfig.DEFAULT_INTERPOLATION_CONFIG
+      interpolationConfig = InterpolationConfig.DEFAULT_INTERPOLATION_CONFIG;
     }
 
-    var parserAst = this._parseBindingAST(input, location, interpolationConfig)
+    var parserAst = this._parseBindingAST(input, location, interpolationConfig);
 
     if (!SimpleExpressionChecker.check(parserAst)) {
-      this._reportError('Host binding expression can only contain field access and constants', input, location)
+      this._reportError('Host binding expression can only contain field access and constants', input, location);
     }
 
-    return new ast.ASTWithSource(parserAst, input, location, this._errors)
+    return new ast.ASTWithSource(parserAst, input, location, this._errors);
   },
 
   /**
@@ -1213,9 +1211,9 @@ var Parser = Oopsy.extend(function(lexer) {
    * @public
    */
   parseTemplateBindings: function(input, location) {
-    var tokens = this._lexer.tokenize(input)
+    var tokens = this._lexer.tokenize(input);
 
-    return new ParserAST(input, location, tokens, false, this._errors).parseTemplateBindings()
+    return new ParserAST(input, location, tokens, false, this._errors).parseTemplateBindings();
   },
 
   /**
@@ -1227,32 +1225,32 @@ var Parser = Oopsy.extend(function(lexer) {
    */
   splitInterpolation: function(input, location, interpolationConfig) {
     if (interpolationConfig == null) {
-      interpolationConfig = InterpolationConfig.DEFAULT_INTERPOLATION_CONFIG
+      interpolationConfig = InterpolationConfig.DEFAULT_INTERPOLATION_CONFIG;
     }
 
-    var regexp = Parser._createInterpolateRegExp(interpolationConfig)
-    var parts = StringWrapper.split(input, regexp)
+    var regexp = Parser._createInterpolateRegExp(interpolationConfig);
+    var parts = StringWrapper.split(input, regexp);
     if (parts.length <= 1) {
-      return null
+      return null;
     }
 
-    var part
-    var expressions = []
-    var strings = []
+    var part;
+    var expressions = [];
+    var strings = [];
 
     for (var i = 0; i < parts.length; i++) {
-      part = parts[i]
+      part = parts[i];
       if (i % 2 === 0) {
-        strings.push(part)
+        strings.push(part);
       } else if (part.trim().length > 0) {
-        expressions.push(part)
+        expressions.push(part);
       } else {
         this._reportError('Blank expressions are not allowed in interpolated strings', input, 'at column ' +
-          this._findInterpolationErrorColumn(parts, i, interpolationConfig) + ' in', location)
+          this._findInterpolationErrorColumn(parts, i, interpolationConfig) + ' in', location);
       }
     }
 
-    return new SplitInterpolation(strings, expressions)
+    return new SplitInterpolation(strings, expressions);
   },
 
   /**
@@ -1262,9 +1260,9 @@ var Parser = Oopsy.extend(function(lexer) {
    * @public
    */
   wrapLiteralPrimitive: function(input, location) {
-    var span = new ast.ParseSpan(0, Lang.isBlank(input) ? 0 : input.length)
+    var span = new ast.ParseSpan(0, Lang.isBlank(input) ? 0 : input.length);
 
-    return new ast.ASTWithSource(new ast.LiteralPrimitive(span, input), input, location, this._errors)
+    return new ast.ASTWithSource(new ast.LiteralPrimitive(span, input), input, location, this._errors);
   },
 
   /**
@@ -1275,15 +1273,15 @@ var Parser = Oopsy.extend(function(lexer) {
    * @private
    */
   _checkNoInterpolation: function(input, location, interpolationConfig) {
-    var regexp = Parser._createInterpolateRegExp(interpolationConfig)
-    var parts = StringWrapper.split(input, regexp)
+    var regexp = Parser._createInterpolateRegExp(interpolationConfig);
+    var parts = StringWrapper.split(input, regexp);
 
     if (parts.length > 1) {
       this._reportError('Got interpolation (' + interpolationConfig.start + interpolationConfig.end +
         ') where expression was expected',
         input,
         'at column ' + this._findInterpolationErrorColumn(parts, 1, interpolationConfig) + ' in',
-        location)
+        location);
     }
   },
 
@@ -1293,27 +1291,27 @@ var Parser = Oopsy.extend(function(lexer) {
    * @private
    */
   _commentStart: function(input) {
-    var chars = Characters.chars
-    var character
-    var nextCharacter
-    var outerQuote = null
+    var chars = Characters.chars;
+    var character;
+    var nextCharacter;
+    var outerQuote = null;
 
     for (var i = 0; i < input.length - 1; i++) {
-      character = StringWrapper.charCodeAt(input, i)
-      nextCharacter = StringWrapper.charCodeAt(input, i + 1)
+      character = StringWrapper.charCodeAt(input, i);
+      nextCharacter = StringWrapper.charCodeAt(input, i + 1);
 
       if (character === chars.$SLASH && nextCharacter === chars.$SLASH && Lang.isBlank(outerQuote)) {
-        return i
+        return i;
       }
 
       if (outerQuote === character) {
-        outerQuote = null
+        outerQuote = null;
       } else if (Lang.isBlank(outerQuote) && lexer.Scanner.isQuote(character)) {
-        outerQuote = character
+        outerQuote = character;
       }
     }
 
-    return null
+    return null;
   },
 
   /**
@@ -1324,13 +1322,13 @@ var Parser = Oopsy.extend(function(lexer) {
    * @private
    */
   _findInterpolationErrorColumn: function(parts, partInErrorIndex, interpolationConfig) {
-    var errorLocation = ''
+    var errorLocation = '';
 
     for (var i = 0; i < partInErrorIndex; i++) {
-      errorLocation += i % 2 === 0 ? parts[i] : interpolationConfig.start + parts[i] + interpolationConfig.end
+      errorLocation += i % 2 === 0 ? parts[i] : interpolationConfig.start + parts[i] + interpolationConfig.end;
     }
 
-    return errorLocation.length
+    return errorLocation.length;
   },
 
   /**
@@ -1341,17 +1339,17 @@ var Parser = Oopsy.extend(function(lexer) {
    * @private
    */
   _parseBindingAST: function(input, location, interpolationConfig) {
-    var quote = this._parseQuote(input, location)
+    var quote = this._parseQuote(input, location);
 
     if (Lang.isPresent(quote)) {
-      return quote
+      return quote;
     }
 
-    this._checkNoInterpolation(input, location, interpolationConfig)
+    this._checkNoInterpolation(input, location, interpolationConfig);
 
-    var tokens = this._lexer.tokenize(this._stripComments(input))
+    var tokens = this._lexer.tokenize(this._stripComments(input));
 
-    return new ParserAST(input, location, tokens, false, this._errors).parseChain()
+    return new ParserAST(input, location, tokens, false, this._errors).parseChain();
   },
 
   /**
@@ -1362,22 +1360,22 @@ var Parser = Oopsy.extend(function(lexer) {
    */
   _parseQuote: function(input, location) {
     if (Lang.isBlank(input)) {
-      return null
+      return null;
     }
 
-    var prefixSeparatorIndex = input.indexOf(':')
+    var prefixSeparatorIndex = input.indexOf(':');
     if (prefixSeparatorIndex === -1) {
-      return null
+      return null;
     }
 
-    var prefix = input.substring(0, prefixSeparatorIndex).trim()
+    var prefix = input.substring(0, prefixSeparatorIndex).trim();
     if (!lexer.Scanner.isIdentifier(prefix)) {
-      return null
+      return null;
     }
 
-    var uninterpretedExpression = input.substring(prefixSeparatorIndex + 1)
+    var uninterpretedExpression = input.substring(prefixSeparatorIndex + 1);
 
-    return new ast.Quote(new ast.ParseSpan(0, input.length), prefix, uninterpretedExpression, location)
+    return new ast.Quote(new ast.ParseSpan(0, input.length), prefix, uninterpretedExpression, location);
   },
 
   /**
@@ -1389,7 +1387,7 @@ var Parser = Oopsy.extend(function(lexer) {
    * @private
    */
   _reportError: function(message, input, errorLocation, contextLocation) {
-    this._errors.push(new ast.ParserError(message, input, errorLocation, contextLocation))
+    this._errors.push(new ast.ParserError(message, input, errorLocation, contextLocation));
   },
 
   /**
@@ -1398,9 +1396,9 @@ var Parser = Oopsy.extend(function(lexer) {
    * @private
    */
   _stripComments: function(input) {
-    var index = this._commentStart(input)
+    var index = this._commentStart(input);
 
-    return Lang.isPresent(index) ? input.substring(0, index).trim() : input
+    return Lang.isPresent(index) ? input.substring(0, index).trim() : input;
   }
 
 }, {
@@ -1412,16 +1410,16 @@ var Parser = Oopsy.extend(function(lexer) {
    * @static
    */
   _createInterpolateRegExp: function(config) {
-    var pattern = Lang.escapeRegExp(config.start) + '([\\s\\S]*?)' + Lang.escapeRegExp(config.end)
+    var pattern = Lang.escapeRegExp(config.start) + '([\\s\\S]*?)' + Lang.escapeRegExp(config.end);
 
-    return new RegExp(pattern, 'g')
+    return new RegExp(pattern, 'g');
   }
 
-})
+});
 
 module.exports = {
   Parser: Parser,
   ParserAST: ParserAST,
   SplitInterpolation: SplitInterpolation,
   TemplateBindingParseResult: TemplateBindingParseResult
-}
+};

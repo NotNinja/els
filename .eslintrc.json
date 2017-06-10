@@ -1,15 +1,15 @@
 {
-  "extends": "skelp/v2/es5",
+  "extends": "notninja/es5",
   "env": {
     "node": true
   },
   "rules": {
-    "max-params": "off",
     "no-empty-function": "off",
     "no-invalid-this": "off",
+    "max-params": "off",
     "no-undefined": "off",
     "no-unused-vars": [
-      "warn",
+      "error",
       {
         "args": "none"
       }

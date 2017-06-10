@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 Alasdair Mercer, Skelp
+ * Copyright (C) 2017 Alasdair Mercer, !ninja
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -20,15 +20,15 @@
  * SOFTWARE.
  */
 
-'use strict'
+'use strict';
 
-var Oopsy = require('oopsy')
+var Nevis = require('nevis/lite');
 
 /**
  * @public
- * @class EL
+ * @class ELS
  */
-var EL = Oopsy.extend(null, {
+var ELS = Nevis.extend(null, {
 
   /**
    * @param {string} expression
@@ -39,9 +39,9 @@ var EL = Oopsy.extend(null, {
    */
   parse: function(expression, context) {
     // TODO: Complete
-    return null
+    return null;
   }
 
-})
+});
 
-module.exports = EL
+module.exports = ELS;

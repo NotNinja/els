@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 Alasdair Mercer, Skelp
+ * Copyright (C) 2017 Alasdair Mercer, !ninja
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,15 +22,15 @@
 
 /* eslint "no-constant-condition": "off" */
 
-'use strict'
+'use strict';
 
-var Oopsy = require('oopsy')
+var Nevis = require('nevis/lite');
 
-var Characters = require('./characters')
-var Lang = require('../lang')
-var NumberWrapper = Lang.NumberWrapper
-var StringJoiner = Lang.StringJoiner
-var StringWrapper = Lang.StringWrapper
+var Characters = require('./characters');
+var Lang = require('../lang');
+var NumberWrapper = Lang.NumberWrapper;
+var StringJoiner = Lang.StringJoiner;
+var StringWrapper = Lang.StringWrapper;
 
 /**
  * @private
@@ -46,20 +46,20 @@ var KEYWORDS = [
   'if',
   'else',
   'this'
-]
+];
 
 /**
  * @public
  * @class TokenType
  */
-var TokenType = Oopsy.extend()
-TokenType.Character = new TokenType()
-TokenType.Error = new TokenType()
-TokenType.Identifier = new TokenType()
-TokenType.Keyword = new TokenType()
-TokenType.Number = new TokenType()
-TokenType.Operator = new TokenType()
-TokenType.String = new TokenType()
+var TokenType = Nevis.extend();
+TokenType.Character = new TokenType();
+TokenType.Error = new TokenType();
+TokenType.Identifier = new TokenType();
+TokenType.Keyword = new TokenType();
+TokenType.Number = new TokenType();
+TokenType.Operator = new TokenType();
+TokenType.String = new TokenType();
 
 /**
  * @param {number} index
@@ -69,27 +69,27 @@ TokenType.String = new TokenType()
  * @public
  * @class Token
  */
-var Token = Oopsy.extend(function(index, type, numericValue, stringValue) {
+var Token = Nevis.extend(function(index, type, numericValue, stringValue) {
   /**
    * @public
    * @type {number}
    */
-  this.index = index
+  this.index = index;
   /**
    * @public
    * @type {TokenType}
    */
-  this.type = type
+  this.type = type;
   /**
    * @public
    * @type {number}
    */
-  this.numericValue = numericValue
+  this.numericValue = numericValue;
   /**
    * @public
    * @type {string}
    */
-  this.stringValue = stringValue
+  this.stringValue = stringValue;
 }, {
 
   /**
@@ -98,7 +98,7 @@ var Token = Oopsy.extend(function(index, type, numericValue, stringValue) {
    * @public
    */
   isCharacter: function(code) {
-    return this.type === TokenType.Character && this.numericValue === code
+    return this.type === TokenType.Character && this.numericValue === code;
   },
 
   /**
@@ -106,7 +106,7 @@ var Token = Oopsy.extend(function(index, type, numericValue, stringValue) {
    * @public
    */
   isError: function() {
-    return this.type === TokenType.Error
+    return this.type === TokenType.Error;
   },
 
   /**
@@ -114,7 +114,7 @@ var Token = Oopsy.extend(function(index, type, numericValue, stringValue) {
    * @public
    */
   isIdentifier: function() {
-    return this.type === TokenType.Identifier
+    return this.type === TokenType.Identifier;
   },
 
   /**
@@ -122,7 +122,7 @@ var Token = Oopsy.extend(function(index, type, numericValue, stringValue) {
    * @public
    */
   isKeyword: function() {
-    return this.type === TokenType.Keyword
+    return this.type === TokenType.Keyword;
   },
 
   /**
@@ -130,7 +130,7 @@ var Token = Oopsy.extend(function(index, type, numericValue, stringValue) {
    * @public
    */
   isKeywordFalse: function() {
-    return this.type === TokenType.Keyword && this.stringValue === 'false'
+    return this.type === TokenType.Keyword && this.stringValue === 'false';
   },
 
   /**
@@ -138,7 +138,7 @@ var Token = Oopsy.extend(function(index, type, numericValue, stringValue) {
    * @public
    */
   isKeywordLet: function() {
-    return this.type === TokenType.Keyword && this.stringValue === 'let'
+    return this.type === TokenType.Keyword && this.stringValue === 'let';
   },
 
   /**
@@ -146,7 +146,7 @@ var Token = Oopsy.extend(function(index, type, numericValue, stringValue) {
    * @public
    */
   isKeywordNull: function() {
-    return this.type === TokenType.Keyword && this.stringValue === 'null'
+    return this.type === TokenType.Keyword && this.stringValue === 'null';
   },
 
   /**
@@ -154,7 +154,7 @@ var Token = Oopsy.extend(function(index, type, numericValue, stringValue) {
    * @public
    */
   isKeywordThis: function() {
-    return this.type === TokenType.Keyword && this.stringValue === 'this'
+    return this.type === TokenType.Keyword && this.stringValue === 'this';
   },
 
   /**
@@ -162,7 +162,7 @@ var Token = Oopsy.extend(function(index, type, numericValue, stringValue) {
    * @public
    */
   isKeywordTrue: function() {
-    return this.type === TokenType.Keyword && this.stringValue === 'true'
+    return this.type === TokenType.Keyword && this.stringValue === 'true';
   },
 
   /**
@@ -170,7 +170,7 @@ var Token = Oopsy.extend(function(index, type, numericValue, stringValue) {
    * @public
    */
   isKeywordUndefined: function() {
-    return this.type === TokenType.Keyword && this.stringValue === 'undefined'
+    return this.type === TokenType.Keyword && this.stringValue === 'undefined';
   },
 
   /**
@@ -178,7 +178,7 @@ var Token = Oopsy.extend(function(index, type, numericValue, stringValue) {
    * @public
    */
   isNumber: function() {
-    return this.type === TokenType.Number
+    return this.type === TokenType.Number;
   },
 
   /**
@@ -187,7 +187,7 @@ var Token = Oopsy.extend(function(index, type, numericValue, stringValue) {
    * @public
    */
   isOperator: function(operator) {
-    return this.type === TokenType.Operator && this.stringValue === operator
+    return this.type === TokenType.Operator && this.stringValue === operator;
   },
 
   /**
@@ -195,7 +195,7 @@ var Token = Oopsy.extend(function(index, type, numericValue, stringValue) {
    * @public
    */
   isString: function() {
-    return this.type === TokenType.String
+    return this.type === TokenType.String;
   },
 
   /**
@@ -203,7 +203,7 @@ var Token = Oopsy.extend(function(index, type, numericValue, stringValue) {
    * @public
    */
   toNumber: function() {
-    return this.type === TokenType.Number ? this.numericValue : -1
+    return this.type === TokenType.Number ? this.numericValue : -1;
   },
 
   /**
@@ -218,11 +218,11 @@ var Token = Oopsy.extend(function(index, type, numericValue, stringValue) {
     case TokenType.Operator:
     case TokenType.String:
     case TokenType.Error:
-      return this.stringValue
+      return this.stringValue;
     case TokenType.Number:
-      return this.numericValue.toString()
+      return this.numericValue.toString();
     default:
-      return null
+      return null;
     }
   }
 
@@ -236,7 +236,7 @@ var Token = Oopsy.extend(function(index, type, numericValue, stringValue) {
    * @static
    */
   newCharacterToken: function(index, code) {
-    return new Token(index, TokenType.Character, code, StringWrapper.fromCharCode(code))
+    return new Token(index, TokenType.Character, code, StringWrapper.fromCharCode(code));
   },
 
   /**
@@ -247,7 +247,7 @@ var Token = Oopsy.extend(function(index, type, numericValue, stringValue) {
    * @static
    */
   newErrorToken: function(index, message) {
-    return new Token(index, TokenType.Error, 0, message)
+    return new Token(index, TokenType.Error, 0, message);
   },
 
   /**
@@ -258,7 +258,7 @@ var Token = Oopsy.extend(function(index, type, numericValue, stringValue) {
    * @static
    */
   newIdentifierToken: function(index, text) {
-    return new Token(index, TokenType.Identifier, 0, text)
+    return new Token(index, TokenType.Identifier, 0, text);
   },
 
   /**
@@ -269,7 +269,7 @@ var Token = Oopsy.extend(function(index, type, numericValue, stringValue) {
    * @static
    */
   newKeywordToken: function(index, text) {
-    return new Token(index, TokenType.Keyword, 0, text)
+    return new Token(index, TokenType.Keyword, 0, text);
   },
 
   /**
@@ -280,7 +280,7 @@ var Token = Oopsy.extend(function(index, type, numericValue, stringValue) {
    * @static
    */
   newNumberToken: function(index, num) {
-    return new Token(index, TokenType.Number, num, '')
+    return new Token(index, TokenType.Number, num, '');
   },
 
   /**
@@ -291,7 +291,7 @@ var Token = Oopsy.extend(function(index, type, numericValue, stringValue) {
    * @static
    */
   newOperatorToken: function(index, text) {
-    return new Token(index, TokenType.Operator, 0, text)
+    return new Token(index, TokenType.Operator, 0, text);
   },
 
   /**
@@ -302,39 +302,39 @@ var Token = Oopsy.extend(function(index, type, numericValue, stringValue) {
    * @static
    */
   newStringToken: function(index, text) {
-    return new Token(index, TokenType.String, 0, text)
+    return new Token(index, TokenType.String, 0, text);
   }
 
-})
+});
 
 /**
  * @param {string} input
  * @public
  * @class Scanner
  */
-var Scanner = Oopsy.extend(function(input) {
+var Scanner = Nevis.extend(function(input) {
   /**
    * @public
    * @type {string}
    */
-  this.input = input
+  this.input = input;
   /**
    * @public
    * @type {number}
    */
-  this.length = input.length
+  this.length = input.length;
   /**
    * @public
    * @type {number}
    */
-  this.index = -1
+  this.index = -1;
   /**
    * @public
    * @type {number}
    */
-  this.peek = 0
+  this.peek = 0;
 
-  this.advance()
+  this.advance();
 }, {
 
   /**
@@ -342,7 +342,7 @@ var Scanner = Oopsy.extend(function(input) {
    * @public
    */
   advance: function() {
-    this.peek = ++this.index >= this.length ? Characters.chars.$EOF : StringWrapper.charCodeAt(this.input, this.index)
+    this.peek = ++this.index >= this.length ? Characters.chars.$EOF : StringWrapper.charCodeAt(this.input, this.index);
   },
 
   /**
@@ -352,10 +352,10 @@ var Scanner = Oopsy.extend(function(input) {
    * @public
    */
   error: function(message, offset) {
-    var position = this.index + offset
-    message = 'Lexer Error: ' + message + ' at column ' + position + ' in expression [' + this.input + ']'
+    var position = this.index + offset;
+    message = 'Lexer Error: ' + message + ' at column ' + position + ' in expression [' + this.input + ']';
 
-    return Token.newErrorToken(position, message)
+    return Token.newErrorToken(position, message);
   },
 
   /**
@@ -365,9 +365,9 @@ var Scanner = Oopsy.extend(function(input) {
    * @public
    */
   scanCharacter: function(start, code) {
-    this.advance()
+    this.advance();
 
-    return Token.newCharacterToken(start, code)
+    return Token.newCharacterToken(start, code);
   },
 
   /**
@@ -381,22 +381,22 @@ var Scanner = Oopsy.extend(function(input) {
    * @public
    */
   scanComplexOperator: function(start, one, twoCode, two, threeCode, three) {
-    this.advance()
+    this.advance();
 
-    var str = one
+    var str = one;
 
     if (this.peek === twoCode) {
-      this.advance()
+      this.advance();
 
-      str += two
+      str += two;
     }
     if (Lang.isPresent(threeCode) && this.peek === threeCode) {
-      this.advance()
+      this.advance();
 
-      str += three
+      str += three;
     }
 
-    return Token.newOperatorToken(start, str)
+    return Token.newOperatorToken(start, str);
   },
 
   /**
@@ -404,17 +404,17 @@ var Scanner = Oopsy.extend(function(input) {
    * @public
    */
   scanIdentifier: function() {
-    var start = this.index
+    var start = this.index;
 
-    this.advance()
+    this.advance();
 
     while (Scanner.isIdentifierPart(this.peek)) {
-      this.advance()
+      this.advance();
     }
 
-    var str = this.input.substring(start, this.index)
+    var str = this.input.substring(start, this.index);
 
-    return KEYWORDS.indexOf(str) > -1 ? Token.newKeywordToken(start, str) : Token.newIdentifierToken(start, str)
+    return KEYWORDS.indexOf(str) > -1 ? Token.newKeywordToken(start, str) : Token.newIdentifierToken(start, str);
   },
 
   /**
@@ -423,37 +423,37 @@ var Scanner = Oopsy.extend(function(input) {
    * @public
    */
   scanNumber: function(start) {
-    var simple = this.index === start
+    var simple = this.index === start;
 
-    this.advance()
+    this.advance();
 
     while (true) {
       if (Characters.isDigit(this.peek)) {
         // Do nothing
       } else if (this.peek === Characters.chars.$PERIOD) {
-        simple = false
+        simple = false;
       } else if (Scanner.isExponentStart(this.peek)) {
-        this.advance()
+        this.advance();
 
         if (Scanner.isExponentSign(this.peek)) {
-          this.advance()
+          this.advance();
         }
         if (!Characters.isDigit(this.peek)) {
-          return this.error('Invalid exponent', -1)
+          return this.error('Invalid exponent', -1);
         }
 
-        simple = false
+        simple = false;
       } else {
-        break
+        break;
       }
 
-      this.advance()
+      this.advance();
     }
 
-    var str = this.input.substring(start, this.index)
-    var value = simple ? NumberWrapper.parseIntAutoRadix(str) : parseFloat(str)
+    var str = this.input.substring(start, this.index);
+    var value = simple ? NumberWrapper.parseIntAutoRadix(str) : parseFloat(str);
 
-    return Token.newNumberToken(start, value)
+    return Token.newNumberToken(start, value);
   },
 
   /**
@@ -463,9 +463,9 @@ var Scanner = Oopsy.extend(function(input) {
    * @public
    */
   scanOperator: function(start, str) {
-    this.advance()
+    this.advance();
 
-    return Token.newOperatorToken(start, str)
+    return Token.newOperatorToken(start, str);
   },
 
   /**
@@ -473,69 +473,69 @@ var Scanner = Oopsy.extend(function(input) {
    * @public
    */
   scanString: function() {
-    var chars = Characters.chars
-    var start = this.index
-    var quote = this.peek
+    var chars = Characters.chars;
+    var start = this.index;
+    var quote = this.peek;
 
-    this.advance()
+    this.advance();
 
-    var buffer
-    var hex
-    var i
-    var unescapedCode
-    var marker = this.index
-    var input = this.input
+    var buffer;
+    var hex;
+    var i;
+    var unescapedCode;
+    var marker = this.index;
+    var input = this.input;
 
     while (this.peek !== quote) {
       if (this.peek === chars.$BACKSLASH) {
         if (buffer == null) {
-          buffer = new StringJoiner()
+          buffer = new StringJoiner();
         }
 
-        buffer.add(input.substring(marker, this.index))
+        buffer.add(input.substring(marker, this.index));
 
-        this.advance()
+        this.advance();
 
         if (this.peek === chars.$u) {
-          hex = input.substring(this.index + 1, this.index + 5)
+          hex = input.substring(this.index + 1, this.index + 5);
           try {
-            unescapedCode = NumberWrapper.parseInt(hex, 16)
+            unescapedCode = NumberWrapper.parseInt(hex, 16);
           } catch (e) {
-            return this.error('Invalid unicode escape [\\u' + hex + ']', 0)
+            return this.error('Invalid unicode escape [\\u' + hex + ']', 0);
           }
 
           for (i = 0; i < 5; i++) {
-            this.advance()
+            this.advance();
           }
         } else {
-          unescapedCode = Characters.unescape(this.peek)
+          unescapedCode = Characters.unescape(this.peek);
 
-          this.advance()
+          this.advance();
         }
 
-        buffer.add(StringWrapper.fromCharCode(unescapedCode))
+        buffer.add(StringWrapper.fromCharCode(unescapedCode));
 
-        marker = this.index
+        marker = this.index;
       } else if (this.peek === chars.$EOF) {
-        return this.error('Unterminated quote', 0)
+        return this.error('Unterminated quote', 0);
       } else {
-        this.advance()
+        this.advance();
       }
     }
 
-    var last = input.substring(marker, this.index)
+    var last = input.substring(marker, this.index);
 
-    this.advance()
+    this.advance();
 
-    var unescaped = last
+    var unescaped = last;
 
     if (buffer != null) {
-      buffer.add(last)
+      buffer.add(last);
 
-      unescaped = buffer.toString()
+      unescaped = buffer.toString();
     }
 
-    return Token.newStringToken(start, unescaped)
+    return Token.newStringToken(start, unescaped);
   },
 
   /**
@@ -543,40 +543,40 @@ var Scanner = Oopsy.extend(function(input) {
    * @public
    */
   scanToken: function() {
-    var chars = Characters.chars
-    var input = this.input
-    var length = this.length
-    var peek = this.peek
-    var index = this.index
+    var chars = Characters.chars;
+    var input = this.input;
+    var length = this.length;
+    var peek = this.peek;
+    var index = this.index;
 
     while (peek <= chars.$SPACE) {
       if (++index >= length) {
-        peek = chars.$EOF
-        break
+        peek = chars.$EOF;
+        break;
       } else {
-        peek = StringWrapper.charCodeAt(input, index)
+        peek = StringWrapper.charCodeAt(input, index);
       }
     }
 
-    this.peek = peek
-    this.index = index
+    this.peek = peek;
+    this.index = index;
 
     if (index >= length) {
-      return null
+      return null;
     }
 
     if (Scanner.isIdentifierStart(peek)) {
-      return this.scanIdentifier()
+      return this.scanIdentifier();
     }
     if (Characters.isDigit(peek)) {
-      return this.scanNumber(index)
+      return this.scanNumber(index);
     }
 
-    var start = index
+    var start = index;
     switch (peek) {
     case chars.$PERIOD:
-      this.advance()
-      return Characters.isDigit(this.peek) ? this.scanNumber(start) : Token.newCharacterToken(start, chars.$PERIOD)
+      this.advance();
+      return Characters.isDigit(this.peek) ? this.scanNumber(start) : Token.newCharacterToken(start, chars.$PERIOD);
     case chars.$LPAREN:
     case chars.$RPAREN:
     case chars.$LBRACE:
@@ -586,10 +586,10 @@ var Scanner = Oopsy.extend(function(input) {
     case chars.$COMMA:
     case chars.$COLON:
     case chars.$SEMICOLON:
-      return this.scanCharacter(start, peek)
+      return this.scanCharacter(start, peek);
     case chars.$SQ:
     case chars.$DQ:
-      return this.scanString()
+      return this.scanString();
     case chars.$HASH:
     case chars.$PLUS:
     case chars.$MINUS:
@@ -597,29 +597,29 @@ var Scanner = Oopsy.extend(function(input) {
     case chars.$SLASH:
     case chars.$PERCENT:
     case chars.$CARET:
-      return this.scanOperator(start, StringWrapper.fromCharCode(peek))
+      return this.scanOperator(start, StringWrapper.fromCharCode(peek));
     case chars.$QUESTION:
-      return this.scanComplexOperator(start, '?', chars.$PERIOD, '.')
+      return this.scanComplexOperator(start, '?', chars.$PERIOD, '.');
     case chars.$LT:
     case chars.$GT:
-      return this.scanComplexOperator(start, StringWrapper.fromCharCode(peek), chars.$EQ, '=')
+      return this.scanComplexOperator(start, StringWrapper.fromCharCode(peek), chars.$EQ, '=');
     case chars.$BANG:
     case chars.$EQ:
-      return this.scanComplexOperator(start, StringWrapper.fromCharCode(peek), chars.$EQ, '=', chars.$EQ, '=')
+      return this.scanComplexOperator(start, StringWrapper.fromCharCode(peek), chars.$EQ, '=', chars.$EQ, '=');
     case chars.$AMPERSAND:
-      return this.scanComplexOperator(start, '&', chars.$AMPERSAND, '&')
+      return this.scanComplexOperator(start, '&', chars.$AMPERSAND, '&');
     case chars.$BAR:
-      return this.scanComplexOperator(start, '|', chars.$BAR, '|')
+      return this.scanComplexOperator(start, '|', chars.$BAR, '|');
     case chars.$NBSP:
       while (Characters.isWhitespace(this.peek)) {
-        this.advance()
+        this.advance();
       }
-      return this.scanToken()
+      return this.scanToken();
     }
 
-    this.advance()
+    this.advance();
 
-    return this.error('Unexpected character [' + StringWrapper.fromCharCode(peek) + ']', 0)
+    return this.error('Unexpected character [' + StringWrapper.fromCharCode(peek) + ']', 0);
   }
 
 }, {
@@ -631,9 +631,9 @@ var Scanner = Oopsy.extend(function(input) {
    * @static
    */
   isExponentSign: function(code) {
-    var chars = Characters.chars
+    var chars = Characters.chars;
 
-    return code === chars.$MINUS || code === chars.$PLUS
+    return code === chars.$MINUS || code === chars.$PLUS;
   },
 
   /**
@@ -643,9 +643,9 @@ var Scanner = Oopsy.extend(function(input) {
    * @static
    */
   isExponentStart: function(code) {
-    var chars = Characters.chars
+    var chars = Characters.chars;
 
-    return code === chars.$e || code === chars.$E
+    return code === chars.$e || code === chars.$E;
   },
 
   /**
@@ -656,26 +656,26 @@ var Scanner = Oopsy.extend(function(input) {
    */
   isIdentifier: function(input) {
     if (input.length === 0) {
-      return false
+      return false;
     }
 
-    var scanner = new Scanner(input)
+    var scanner = new Scanner(input);
 
     if (!Scanner.isIdentifierStart(scanner.peek)) {
-      return false
+      return false;
     }
 
-    scanner.advance()
+    scanner.advance();
 
     while (scanner.peek !== Characters.chars.$EOF) {
       if (!Scanner.isIdentifierPart(scanner.peek)) {
-        return false
+        return false;
       }
 
-      scanner.advance()
+      scanner.advance();
     }
 
-    return true
+    return true;
   },
 
   /**
@@ -685,9 +685,9 @@ var Scanner = Oopsy.extend(function(input) {
    * @static
    */
   isIdentifierPart: function(code) {
-    var chars = Characters.chars
+    var chars = Characters.chars;
 
-    return Characters.isAsciiLetter(code) || Characters.isDigit(code) || (code === chars.$_) || (code === chars.$$)
+    return Characters.isAsciiLetter(code) || Characters.isDigit(code) || (code === chars.$_) || (code === chars.$$);
   },
 
   /**
@@ -697,10 +697,10 @@ var Scanner = Oopsy.extend(function(input) {
    * @static
    */
   isIdentifierStart: function(code) {
-    var chars = Characters.chars
+    var chars = Characters.chars;
 
     return (chars.$a <= code && code <= chars.$z) || (chars.$A <= code && code <= chars.$Z) || (code === chars.$_) ||
-      (code === chars.$$)
+      (code === chars.$$);
   },
 
   /**
@@ -710,18 +710,18 @@ var Scanner = Oopsy.extend(function(input) {
    * @static
    */
   isQuote: function(code) {
-    var chars = Characters.chars
+    var chars = Characters.chars;
 
-    return code === chars.$SQ || code === chars.$DQ || code === chars.$BT
+    return code === chars.$SQ || code === chars.$DQ || code === chars.$BT;
   }
 
-})
+});
 
 /**
  * @public
  * @class Lexer
  */
-var Lexer = Oopsy.extend({
+var Lexer = Nevis.extend({
 
   /**
    * @param {string} text
@@ -729,25 +729,25 @@ var Lexer = Oopsy.extend({
    * @public
    */
   tokenize: function(text) {
-    var scanner = new Scanner(text)
-    var tokens = []
-    var token = scanner.scanToken()
+    var scanner = new Scanner(text);
+    var tokens = [];
+    var token = scanner.scanToken();
 
     while (token != null) {
-      tokens.push(token)
-      token = scanner.scanToken()
+      tokens.push(token);
+      token = scanner.scanToken();
     }
 
-    return tokens
+    return tokens;
   }
 
-})
+});
 
 /**
  * @public
  * @type {Token}
  */
-var EOF = new Token(-1, TokenType.Character, 0, '')
+var EOF = new Token(-1, TokenType.Character, 0, '');
 
 module.exports = {
   EOF: EOF,
@@ -755,4 +755,4 @@ module.exports = {
   Scanner: Scanner,
   Token: Token,
   TokenType: TokenType
-}
+};

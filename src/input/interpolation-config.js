@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 Alasdair Mercer, Skelp
+ * Copyright (C) 2017 Alasdair Mercer, !ninja
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -20,11 +20,11 @@
  * SOFTWARE.
  */
 
-'use strict'
+'use strict';
 
-var Oopsy = require('oopsy')
+var Nevis = require('nevis/lite');
 
-var Assertions = require('./assertions')
+var Assertions = require('./assertions');
 
 /**
  * @param {string} start
@@ -32,17 +32,17 @@ var Assertions = require('./assertions')
  * @public
  * @class InterpolationConfig
  */
-var InterpolationConfig = Oopsy.extend(function(start, end) {
+var InterpolationConfig = Nevis.extend(function(start, end) {
   /**
    * @public
    * @type {string}
    */
-  this.start = start
+  this.start = start;
   /**
    * @public
    * @type {string}
    */
-  this.end = end
+  this.end = end;
 }, null, {
 
   /**
@@ -53,21 +53,21 @@ var InterpolationConfig = Oopsy.extend(function(start, end) {
    */
   fromArray: function(markers) {
     if (!markers) {
-      return InterpolationConfig.DEFAULT_INTERPOLATION_CONFIG
+      return InterpolationConfig.DEFAULT_INTERPOLATION_CONFIG;
     }
 
-    Assertions.assertInterpolationSymbols('interpolation', markers)
+    Assertions.assertInterpolationSymbols('interpolation', markers);
 
-    return new InterpolationConfig(markers[0], markers[1])
+    return new InterpolationConfig(markers[0], markers[1]);
   }
 
-})
+});
 
 /**
  * @public
  * @static
  * @type {InterpolationConfig}
  */
-InterpolationConfig.DEFAULT_INTERPOLATION_CONFIG = new InterpolationConfig('{{', '}}')
+InterpolationConfig.DEFAULT_INTERPOLATION_CONFIG = new InterpolationConfig('{{', '}}');
 
-module.exports = InterpolationConfig
+module.exports = InterpolationConfig;

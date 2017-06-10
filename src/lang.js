@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 Alasdair Mercer, Skelp
+ * Copyright (C) 2017 Alasdair Mercer, !ninja
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,9 +22,9 @@
 
 /* eslint "radix": "off" */
 
-'use strict'
+'use strict';
 
-var Oopsy = require('oopsy')
+var Nevis = require('nevis/lite');
 
 // TODO: Remove unused methods
 
@@ -32,7 +32,7 @@ var Oopsy = require('oopsy')
  * @public
  * @class NumberWrapper
  */
-var NumberWrapper = Oopsy.extend(null, {
+var NumberWrapper = Nevis.extend(null, {
 
   /**
    * @public
@@ -49,7 +49,7 @@ var NumberWrapper = Oopsy.extend(null, {
    * @static
    */
   equals: function(n1, n2) {
-    return n1 === n2
+    return n1 === n2;
   },
 
   /**
@@ -60,7 +60,7 @@ var NumberWrapper = Oopsy.extend(null, {
    */
   isInteger: function(value) {
     // TODO: Browser support?
-    return Number.isInteger(value)
+    return Number.isInteger(value);
   },
 
   /**
@@ -70,7 +70,7 @@ var NumberWrapper = Oopsy.extend(null, {
    * @static
    */
   isNaN: function(value) {
-    return isNaN(value)
+    return isNaN(value);
   },
 
   /**
@@ -80,7 +80,7 @@ var NumberWrapper = Oopsy.extend(null, {
    * @static
    */
   isNumeric: function(value) {
-    return !isNaN(value - parseFloat(value))
+    return !isNaN(value - parseFloat(value));
   },
 
   /**
@@ -91,24 +91,24 @@ var NumberWrapper = Oopsy.extend(null, {
    * @static
    */
   parseInt: function(text, radix) {
-    var result
+    var result;
 
     if (radix === 10) {
-      if (/^(\-|\+)?[0-9]+$/.test(text)) {
-        return parseInt(text, radix)
+      if (/^(-|\+)?[0-9]+$/.test(text)) {
+        return parseInt(text, radix);
       }
     } else if (radix === 16) {
-      if (/^(\-|\+)?[0-9ABCDEFabcdef]+$/.test(text)) {
-        return parseInt(text, radix)
+      if (/^(-|\+)?[0-9ABCDEFabcdef]+$/.test(text)) {
+        return parseInt(text, radix);
       }
     } else {
-      result = parseInt(text, radix)
+      result = parseInt(text, radix);
       if (!isNaN(result)) {
-        return result
+        return result;
       }
     }
 
-    throw new Error('Invalid integer literal when parsing ' + text + ' in base ' + radix)
+    throw new Error('Invalid integer literal when parsing ' + text + ' in base ' + radix);
   },
 
   /**
@@ -118,12 +118,12 @@ var NumberWrapper = Oopsy.extend(null, {
    * @static
    */
   parseIntAutoRadix: function(text) {
-    var result = parseInt(text)
+    var result = parseInt(text);
     if (isNaN(result)) {
-      throw new Error('Invalid integer literal when parsing ' + text)
+      throw new Error('Invalid integer literal when parsing ' + text);
     }
 
-    return result
+    return result;
   },
 
   /**
@@ -134,22 +134,22 @@ var NumberWrapper = Oopsy.extend(null, {
    * @static
    */
   toFixed: function(num, fractionDigits) {
-    return num.toFixed(fractionDigits)
+    return num.toFixed(fractionDigits);
   }
 
-})
+});
 
 /**
  * @param {string[]} [parts=[]]
  * @public
  * @class StringJoiner
  */
-var StringJoiner = Oopsy.extend(function(parts) {
+var StringJoiner = Nevis.extend(function(parts) {
   /**
    * @public
    * @type {string[]}
    */
-  this.parts = parts != null ? parts : []
+  this.parts = parts != null ? parts : [];
 }, {
 
   /**
@@ -158,7 +158,7 @@ var StringJoiner = Oopsy.extend(function(parts) {
    * @public
    */
   add: function(part) {
-    this.parts.push(part)
+    this.parts.push(part);
   },
 
   /**
@@ -166,16 +166,16 @@ var StringJoiner = Oopsy.extend(function(parts) {
    * @public
    */
   toString: function() {
-    return this.parts.join('')
+    return this.parts.join('');
   }
 
-})
+});
 
 /**
  * @public
  * @class StringWrapper
  */
-var StringWrapper = Oopsy.extend(null, {
+var StringWrapper = Nevis.extend(null, {
 
   /**
    * @param {string} str
@@ -185,7 +185,7 @@ var StringWrapper = Oopsy.extend(null, {
    * @static
    */
   charCodeAt: function(str, index) {
-    return str.charCodeAt(index)
+    return str.charCodeAt(index);
   },
 
   /**
@@ -197,12 +197,12 @@ var StringWrapper = Oopsy.extend(null, {
    */
   compare: function(s1, s2) {
     if (s1 < s2) {
-      return -1
+      return -1;
     } else if (s1 > s2) {
-      return 1
+      return 1;
     }
 
-    return 0
+    return 0;
   },
 
   /**
@@ -213,7 +213,7 @@ var StringWrapper = Oopsy.extend(null, {
    * @static
    */
   contains: function(str, substr) {
-    return str.indexOf(substr) !== -1
+    return str.indexOf(substr) !== -1;
   },
 
   /**
@@ -224,7 +224,7 @@ var StringWrapper = Oopsy.extend(null, {
    * @static
    */
   equals: function(s1, s2) {
-    return s1 === s2
+    return s1 === s2;
   },
 
   /**
@@ -234,7 +234,7 @@ var StringWrapper = Oopsy.extend(null, {
    * @static
    */
   fromCharCode: function(code) {
-    return String.fromCharCode(code)
+    return String.fromCharCode(code);
   },
 
   /**
@@ -246,7 +246,7 @@ var StringWrapper = Oopsy.extend(null, {
    * @static
    */
   replace: function(str, from, replace) {
-    return str.replace(from, replace)
+    return str.replace(from, replace);
   },
 
   /**
@@ -258,7 +258,7 @@ var StringWrapper = Oopsy.extend(null, {
    * @static
    */
   replaceAll: function(str, from, replace) {
-    return str.replace(from, replace)
+    return str.replace(from, replace);
   },
 
   /**
@@ -271,10 +271,10 @@ var StringWrapper = Oopsy.extend(null, {
    */
   replaceAllMapped: function(str, from, callback) {
     return str.replace(from, function() {
-      var matches = Array.prototype.slice.call(arguments, 0, -2)
+      var matches = Array.prototype.slice.call(arguments, 0, -2);
 
-      return callback(matches)
-    })
+      return callback(matches);
+    });
   },
 
   /**
@@ -286,7 +286,7 @@ var StringWrapper = Oopsy.extend(null, {
    * @static
    */
   slice: function(str, from, to) {
-    return str.slice(from == null ? 0 : from, to == null ? undefined : to)
+    return str.slice(from == null ? 0 : from, to == null ? undefined : to);
   },
 
   /**
@@ -297,7 +297,7 @@ var StringWrapper = Oopsy.extend(null, {
    * @static
    */
   split: function(str, regExp) {
-    return str.split(regExp)
+    return str.split(regExp);
   },
 
   /**
@@ -308,24 +308,24 @@ var StringWrapper = Oopsy.extend(null, {
    * @static
    */
   stripLeft: function(str, character) {
-    var i
-    var position
+    var i;
+    var position;
 
     if (str && str.length) {
-      position = 0
+      position = 0;
 
       for (i = 0; i < str.length; i++) {
         if (str[i] !== character) {
-          break
+          break;
         }
 
-        position++
+        position++;
       }
 
-      str = str.substring(position)
+      str = str.substring(position);
     }
 
-    return str
+    return str;
   },
 
   /**
@@ -336,33 +336,33 @@ var StringWrapper = Oopsy.extend(null, {
    * @static
    */
   stripRight: function(str, character) {
-    var i
-    var position
+    var i;
+    var position;
 
     if (str && str.length) {
-      position = str.length
+      position = str.length;
 
       for (i = str.length - 1; i >= 0; i--) {
         if (str[i] !== character) {
-          break
+          break;
         }
 
-        position--
+        position--;
       }
 
-      str = str.substring(0, position)
+      str = str.substring(0, position);
     }
 
-    return str
+    return str;
   }
 
-})
+});
 
 /**
  * @public
  * @class Lang
  */
-var Lang = Oopsy.extend(null, {
+var Lang = Nevis.extend(null, {
 
   NumberWrapper: NumberWrapper,
   StringJoiner: StringJoiner,
@@ -375,7 +375,7 @@ var Lang = Oopsy.extend(null, {
    * @static
    */
   escapeRegExp: function(str) {
-    return str.replace(/([.*+?^=!:${}()|[\]\/\\])/g, '\\$1')
+    return str.replace(/([.*+?^=!:${}()|[\]/\\])/g, '\\$1');
   },
 
   /**
@@ -385,7 +385,7 @@ var Lang = Oopsy.extend(null, {
    * @static
    */
   isArray: function(obj) {
-    return Object.prototype.toString.call(obj) === '[object Array]'
+    return Object.prototype.toString.call(obj) === '[object Array]';
   },
 
   /**
@@ -395,7 +395,7 @@ var Lang = Oopsy.extend(null, {
    * @static
    */
   isBlank: function(obj) {
-    return typeof obj === 'undefined' || obj === null
+    return typeof obj === 'undefined' || obj === null;
   },
 
   /**
@@ -405,9 +405,9 @@ var Lang = Oopsy.extend(null, {
    * @static
    */
   isPresent: function(obj) {
-    return typeof obj !== 'undefined' && obj !== null
+    return typeof obj !== 'undefined' && obj !== null;
   }
 
-})
+});
 
-module.exports = Lang
+module.exports = Lang;

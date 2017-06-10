@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 Alasdair Mercer, Skelp
+ * Copyright (C) 2017 Alasdair Mercer, !ninja
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -20,11 +20,11 @@
  * SOFTWARE.
  */
 
-'use strict'
+'use strict';
 
-var Oopsy = require('oopsy')
+var Nevis = require('nevis/lite');
 
-var Lang = require('../lang')
+var Lang = require('../lang');
 
 /**
  * @param {number} start
@@ -32,18 +32,18 @@ var Lang = require('../lang')
  * @public
  * @class ParseSpan
  */
-var ParseSpan = Oopsy.extend(function(start, end) {
+var ParseSpan = Nevis.extend(function(start, end) {
   /**
    * @public
    * @type {number}
    */
-  this.start = start
+  this.start = start;
   /**
    * @public
    * @type {number}
    */
-  this.end = end
-})
+  this.end = end;
+});
 
 /**
  * @param {string} message
@@ -53,28 +53,28 @@ var ParseSpan = Oopsy.extend(function(start, end) {
  * @public
  * @class ParserError
  */
-var ParserError = Oopsy.extend(function(message, input, errorLocation, contextLocation) {
+var ParserError = Nevis.extend(function(message, input, errorLocation, contextLocation) {
   /**
    * @public
    * @type {string}
    */
-  this.message = 'Parser Error: ' + message + ' ' + errorLocation + ' [' + input + '] in ' + contextLocation
+  this.message = 'Parser Error: ' + message + ' ' + errorLocation + ' [' + input + '] in ' + contextLocation;
   /**
    * @public
    * @type {string}
    */
-  this.input = input
+  this.input = input;
   /**
    * @public
    * @type {string}
    */
-  this.errorLocation = errorLocation
+  this.errorLocation = errorLocation;
   /**
    * @public
    * @type {*}
    */
-  this.contextLocation = contextLocation
-})
+  this.contextLocation = contextLocation;
+});
 
 /**
  * TODO: Document
@@ -83,12 +83,12 @@ var ParserError = Oopsy.extend(function(message, input, errorLocation, contextLo
  * @public
  * @class AST
  */
-var AST = Oopsy.extend(function(span) {
+var AST = Nevis.extend(function(span) {
   /**
    * @public
    * @type {ParseSpan}
    */
-  this.span = span
+  this.span = span;
 }, {
 
   /**
@@ -98,7 +98,7 @@ var AST = Oopsy.extend(function(span) {
    * @public
    */
   visit: function(visitor, context) {
-    return null
+    return null;
   },
 
   /**
@@ -107,10 +107,10 @@ var AST = Oopsy.extend(function(span) {
    */
   toString: function() {
     // TODO: Necessary?
-    return 'AST'
+    return 'AST';
   }
 
-})
+});
 
 /**
  * @param {AST} ast
@@ -122,28 +122,28 @@ var AST = Oopsy.extend(function(span) {
  * @extends {AST}
  */
 var ASTWithSource = AST.extend(function(ast, source, location, errors) {
-  ASTWithSource.super_.call(this, new ParseSpan(0, Lang.isBlank(source) ? 0 : source.length))
+  ASTWithSource.super_.call(this, new ParseSpan(0, Lang.isBlank(source) ? 0 : source.length));
 
   /**
    * @public
    * @type {AST}
    */
-  this.ast = ast
+  this.ast = ast;
   /**
    * @public
    * @type {string}
    */
-  this.source = source
+  this.source = source;
   /**
    * @public
    * @type {string}
    */
-  this.location = location
+  this.location = location;
   /**
    * @public
    * @type {ParserError[]}
    */
-  this.errors = errors
+  this.errors = errors;
 }, {
 
   /**
@@ -151,7 +151,7 @@ var ASTWithSource = AST.extend(function(ast, source, location, errors) {
    * @inheritDoc
    */
   visit: function(visitor, context) {
-    return this.ast.visit(visitor, context)
+    return this.ast.visit(visitor, context);
   },
 
   /**
@@ -160,10 +160,10 @@ var ASTWithSource = AST.extend(function(ast, source, location, errors) {
    */
   toString: function() {
     // TODO: Necessary?
-    return this.source + ' in ' + this.location
+    return this.source + ' in ' + this.location;
   }
 
-})
+});
 
 /**
  * @param {ParseSpan} span
@@ -175,23 +175,23 @@ var ASTWithSource = AST.extend(function(ast, source, location, errors) {
  * @extends {AST}
  */
 var Binary = AST.extend(function(span, operation, left, right) {
-  Binary.super_.call(this, span)
+  Binary.super_.call(this, span);
 
   /**
    * @public
    * @type {string}
    */
-  this.operation = operation
+  this.operation = operation;
   /**
    * @public
    * @type {AST}
    */
-  this.left = left
+  this.left = left;
   /**
    * @public
    * @type {AST}
    */
-  this.right = right
+  this.right = right;
 }, {
 
   /**
@@ -200,13 +200,13 @@ var Binary = AST.extend(function(span, operation, left, right) {
    */
   visit: function(visitor, context) {
     if (typeof context === 'undefined') {
-      context = null
+      context = null;
     }
 
-    return visitor.visitBinary(this, context)
+    return visitor.visitBinary(this, context);
   }
 
-})
+});
 
 /**
  * @param {ParseSpan} span
@@ -218,23 +218,23 @@ var Binary = AST.extend(function(span, operation, left, right) {
  * @extends {AST}
  */
 var BindingPipe = AST.extend(function(span, expression, name, args) {
-  BindingPipe.super_.call(this, span)
+  BindingPipe.super_.call(this, span);
 
   /**
    * @public
    * @type {AST}
    */
-  this.expression = expression
+  this.expression = expression;
   /**
    * @public
    * @type {string}
    */
-  this.name = name
+  this.name = name;
   /**
    * @public
    * @type {Array}
    */
-  this.args = args
+  this.args = args;
 }, {
 
   /**
@@ -243,13 +243,13 @@ var BindingPipe = AST.extend(function(span, expression, name, args) {
    */
   visit: function(visitor, context) {
     if (typeof context === 'undefined') {
-      context = null
+      context = null;
     }
 
-    return visitor.visitPipe(this, context)
+    return visitor.visitPipe(this, context);
   }
 
-})
+});
 
 /**
  * @param {ParseSpan} span
@@ -259,13 +259,13 @@ var BindingPipe = AST.extend(function(span, expression, name, args) {
  * @extends {AST}
  */
 var Chain = AST.extend(function(span, expressions) {
-  Chain.super_.call(this, span)
+  Chain.super_.call(this, span);
 
   /**
    * @public
    * @type {Array}
    */
-  this.expressions = expressions
+  this.expressions = expressions;
 }, {
 
   /**
@@ -274,13 +274,13 @@ var Chain = AST.extend(function(span, expressions) {
    */
   visit: function(visitor, context) {
     if (typeof context === 'undefined') {
-      context = null
+      context = null;
     }
 
-    return visitor.visitChain(this, context)
+    return visitor.visitChain(this, context);
   }
 
-})
+});
 
 /**
  * @param {ParseSpan} span
@@ -292,23 +292,23 @@ var Chain = AST.extend(function(span, expressions) {
  * @extends {AST}
  */
 var Conditional = AST.extend(function(span, condition, trueExpression, falseExpression) {
-  Conditional.super_.call(this, span)
+  Conditional.super_.call(this, span);
 
   /**
    * @public
    * @type {AST}
    */
-  this.condition = condition
+  this.condition = condition;
   /**
    * @public
    * @type {AST}
    */
-  this.trueExpression = trueExpression
+  this.trueExpression = trueExpression;
   /**
    * @public
    * @type {AST}
    */
-  this.falseExpression = falseExpression
+  this.falseExpression = falseExpression;
 }, {
 
   /**
@@ -317,13 +317,13 @@ var Conditional = AST.extend(function(span, condition, trueExpression, falseExpr
    */
   visit: function(visitor, context) {
     if (typeof context === 'undefined') {
-      context = null
+      context = null;
     }
 
-    return visitor.visitConditional(this, context)
+    return visitor.visitConditional(this, context);
   }
 
-})
+});
 
 /**
  * @public
@@ -338,7 +338,7 @@ var EmptyExpression = AST.extend({
    */
   visit: function(visitor, context) {}
 
-})
+});
 
 /**
  * @param {ParseSpan} span
@@ -349,18 +349,18 @@ var EmptyExpression = AST.extend({
  * @extends {AST}
  */
 var FunctionCall = AST.extend(function(span, target, args) {
-  FunctionCall.super_.call(this, span)
+  FunctionCall.super_.call(this, span);
 
   /**
    * @public
    * @type {AST}
    */
-  this.target = target
+  this.target = target;
   /**
    * @public
    * @type {Array}
    */
-  this.args = args
+  this.args = args;
 }, {
 
   /**
@@ -369,13 +369,13 @@ var FunctionCall = AST.extend(function(span, target, args) {
    */
   visit: function(visitor, context) {
     if (typeof context === 'undefined') {
-      context = null
+      context = null;
     }
 
-    return visitor.visitFunctionCall(this, context)
+    return visitor.visitFunctionCall(this, context);
   }
 
-})
+});
 
 /**
  * @public
@@ -390,13 +390,13 @@ var ImplicitReceiver = AST.extend({
    */
   visit: function(visitor, context) {
     if (typeof context === 'undefined') {
-      context = null
+      context = null;
     }
 
-    return visitor.visitImplicitReceiver(this, context)
+    return visitor.visitImplicitReceiver(this, context);
   }
 
-})
+});
 
 /**
  * @param {ParseSpan} span
@@ -407,18 +407,18 @@ var ImplicitReceiver = AST.extend({
  * @extends {AST}
  */
 var Interpolation = AST.extend(function(span, strings, expressions) {
-  Interpolation.super_.call(this, span)
+  Interpolation.super_.call(this, span);
 
   /**
    * @public
    * @type {Array}
    */
-  this.strings = strings
+  this.strings = strings;
   /**
    * @public
    * @type {Array}
    */
-  this.expressions = expressions
+  this.expressions = expressions;
 }, {
 
   /**
@@ -427,13 +427,13 @@ var Interpolation = AST.extend(function(span, strings, expressions) {
    */
   visit: function(visitor, context) {
     if (typeof context === 'undefined') {
-      context = null
+      context = null;
     }
 
-    return visitor.visitInterpolation(this, context)
+    return visitor.visitInterpolation(this, context);
   }
 
-})
+});
 
 /**
  * @param {ParseSpan} span
@@ -444,18 +444,18 @@ var Interpolation = AST.extend(function(span, strings, expressions) {
  * @extends {AST}
  */
 var KeyedRead = AST.extend(function(span, obj, key) {
-  KeyedRead.super_.call(this, span)
+  KeyedRead.super_.call(this, span);
 
   /**
    * @public
    * @type {AST}
    */
-  this.obj = obj
+  this.obj = obj;
   /**
    * @public
    * @type {AST}
    */
-  this.key = key
+  this.key = key;
 }, {
 
   /**
@@ -464,13 +464,13 @@ var KeyedRead = AST.extend(function(span, obj, key) {
    */
   visit: function(visitor, context) {
     if (typeof context === 'undefined') {
-      context = null
+      context = null;
     }
 
-    return visitor.visitKeyedRead(this, context)
+    return visitor.visitKeyedRead(this, context);
   }
 
-})
+});
 
 /**
  * @param {ParseSpan} span
@@ -482,23 +482,23 @@ var KeyedRead = AST.extend(function(span, obj, key) {
  * @extends {AST}
  */
 var KeyedWrite = AST.extend(function(span, obj, key, value) {
-  KeyedWrite.super_.call(this, span)
+  KeyedWrite.super_.call(this, span);
 
   /**
    * @public
    * @type {AST}
    */
-  this.obj = obj
+  this.obj = obj;
   /**
    * @public
    * @type {AST}
    */
-  this.key = key
+  this.key = key;
   /**
    * @public
    * @type {AST}
    */
-  this.value = value
+  this.value = value;
 }, {
 
   /**
@@ -507,13 +507,13 @@ var KeyedWrite = AST.extend(function(span, obj, key, value) {
    */
   visit: function(visitor, context) {
     if (typeof context === 'undefined') {
-      context = null
+      context = null;
     }
 
-    return visitor.visitKeyedWrite(this, context)
+    return visitor.visitKeyedWrite(this, context);
   }
 
-})
+});
 
 /**
  * @param {ParseSpan} span
@@ -523,13 +523,13 @@ var KeyedWrite = AST.extend(function(span, obj, key, value) {
  * @extends {AST}
  */
 var LiteralArray = AST.extend(function(span, expressions) {
-  LiteralArray.super_.call(this, span)
+  LiteralArray.super_.call(this, span);
 
   /**
    * @public
    * @type {Array}
    */
-  this.expressions = expressions
+  this.expressions = expressions;
 }, {
 
   /**
@@ -538,13 +538,13 @@ var LiteralArray = AST.extend(function(span, expressions) {
    */
   visit: function(visitor, context) {
     if (typeof context === 'undefined') {
-      context = null
+      context = null;
     }
 
-    return visitor.visitLiteralArray(this, context)
+    return visitor.visitLiteralArray(this, context);
   }
 
-})
+});
 
 /**
  * @param {ParseSpan} span
@@ -555,18 +555,18 @@ var LiteralArray = AST.extend(function(span, expressions) {
  * @extends {AST}
  */
 var LiteralMap = AST.extend(function(span, keys, values) {
-  LiteralMap.super_.call(this, span)
+  LiteralMap.super_.call(this, span);
 
   /**
    * @public
    * @type {Array}
    */
-  this.keys = keys
+  this.keys = keys;
   /**
    * @public
    * @type {Array}
    */
-  this.values = values
+  this.values = values;
 }, {
 
   /**
@@ -575,13 +575,13 @@ var LiteralMap = AST.extend(function(span, keys, values) {
    */
   visit: function(visitor, context) {
     if (typeof context === 'undefined') {
-      context = null
+      context = null;
     }
 
-    return visitor.visitLiteralMap(this, context)
+    return visitor.visitLiteralMap(this, context);
   }
 
-})
+});
 
 /**
  * @param {ParseSpan} span
@@ -591,13 +591,13 @@ var LiteralMap = AST.extend(function(span, keys, values) {
  * @extends {AST}
  */
 var LiteralPrimitive = AST.extend(function(span, value) {
-  LiteralPrimitive.super_.call(this, span)
+  LiteralPrimitive.super_.call(this, span);
 
   /**
    * @public
    * @type {*}
    */
-  this.value = value
+  this.value = value;
 }, {
 
   /**
@@ -606,13 +606,13 @@ var LiteralPrimitive = AST.extend(function(span, value) {
    */
   visit: function(visitor, context) {
     if (typeof context === 'undefined') {
-      context = null
+      context = null;
     }
 
-    return visitor.visitLiteralPrimitive(this, context)
+    return visitor.visitLiteralPrimitive(this, context);
   }
 
-})
+});
 
 /**
  * @param {ParseSpan} span
@@ -624,23 +624,23 @@ var LiteralPrimitive = AST.extend(function(span, value) {
  * @extends {AST}
  */
 var MethodCall = AST.extend(function(span, receiver, name, args) {
-  MethodCall.super_.call(this, span)
+  MethodCall.super_.call(this, span);
 
   /**
    * @public
    * @type {AST}
    */
-  this.receiver = receiver
+  this.receiver = receiver;
   /**
    * @public
    * @type {string}
    */
-  this.name = name
+  this.name = name;
   /**
    * @public
    * @type {Array}
    */
-  this.args = args
+  this.args = args;
 }, {
 
   /**
@@ -649,13 +649,13 @@ var MethodCall = AST.extend(function(span, receiver, name, args) {
    */
   visit: function(visitor, context) {
     if (typeof context === 'undefined') {
-      context = null
+      context = null;
     }
 
-    return visitor.visitMethodCall(this, context)
+    return visitor.visitMethodCall(this, context);
   }
 
-})
+});
 
 /**
  * @param {ParseSpan} span
@@ -665,13 +665,13 @@ var MethodCall = AST.extend(function(span, receiver, name, args) {
  * @extends {AST}
  */
 var PrefixNot = AST.extend(function(span, expression) {
-  PrefixNot.super_.call(this, span)
+  PrefixNot.super_.call(this, span);
 
   /**
    * @public
    * @type {AST}
    */
-  this.expression = expression
+  this.expression = expression;
 }, {
 
   /**
@@ -680,13 +680,13 @@ var PrefixNot = AST.extend(function(span, expression) {
    */
   visit: function(visitor, context) {
     if (typeof context === 'undefined') {
-      context = null
+      context = null;
     }
 
-    return visitor.visitPrefixNot(this, context)
+    return visitor.visitPrefixNot(this, context);
   }
 
-})
+});
 
 /**
  * @param {ParseSpan} span
@@ -697,18 +697,18 @@ var PrefixNot = AST.extend(function(span, expression) {
  * @extends {AST}
  */
 var PropertyRead = AST.extend(function(span, receiver, name) {
-  PropertyRead.super_.call(this, span)
+  PropertyRead.super_.call(this, span);
 
   /**
    * @public
    * @type {AST}
    */
-  this.receiver = receiver
+  this.receiver = receiver;
   /**
    * @public
    * @type {string}
    */
-  this.name = name
+  this.name = name;
 }, {
 
   /**
@@ -717,13 +717,13 @@ var PropertyRead = AST.extend(function(span, receiver, name) {
    */
   visit: function(visitor, context) {
     if (typeof context === 'undefined') {
-      context = null
+      context = null;
     }
 
-    return visitor.visitPropertyRead(this, context)
+    return visitor.visitPropertyRead(this, context);
   }
 
-})
+});
 
 /**
  * @param {ParseSpan} span
@@ -735,23 +735,23 @@ var PropertyRead = AST.extend(function(span, receiver, name) {
  * @extends {AST}
  */
 var PropertyWrite = AST.extend(function(span, receiver, name, value) {
-  PropertyWrite.super_.call(this, span)
+  PropertyWrite.super_.call(this, span);
 
   /**
    * @public
    * @type {AST}
    */
-  this.receiver = receiver
+  this.receiver = receiver;
   /**
    * @public
    * @type {string}
    */
-  this.name = name
+  this.name = name;
   /**
    * @public
    * @type {AST}
    */
-  this.value = value
+  this.value = value;
 }, {
 
   /**
@@ -760,13 +760,13 @@ var PropertyWrite = AST.extend(function(span, receiver, name, value) {
    */
   visit: function(visitor, context) {
     if (typeof context === 'undefined') {
-      context = null
+      context = null;
     }
 
-    return visitor.visitPropertyWrite(this, context)
+    return visitor.visitPropertyWrite(this, context);
   }
 
-})
+});
 
 /**
  * @param {ParseSpan} span
@@ -778,23 +778,23 @@ var PropertyWrite = AST.extend(function(span, receiver, name, value) {
  * @extends {AST}
  */
 var Quote = AST.extend(function(span, prefix, uninterpretedExpression, location) {
-  Quote.super_.call(this, span)
+  Quote.super_.call(this, span);
 
   /**
    * @public
    * @type {string}
    */
-  this.prefix = prefix
+  this.prefix = prefix;
   /**
    * @public
    * @type {string}
    */
-  this.uninterpretedExpression = uninterpretedExpression
+  this.uninterpretedExpression = uninterpretedExpression;
   /**
    * @public
    * @type {*}
    */
-  this.location = location
+  this.location = location;
 }, {
 
   /**
@@ -803,10 +803,10 @@ var Quote = AST.extend(function(span, prefix, uninterpretedExpression, location)
    */
   visit: function(visitor, context) {
     if (typeof context === 'undefined') {
-      context = null
+      context = null;
     }
 
-    return visitor.visitQuote(this, context)
+    return visitor.visitQuote(this, context);
   },
 
   /**
@@ -815,10 +815,10 @@ var Quote = AST.extend(function(span, prefix, uninterpretedExpression, location)
    */
   toString: function() {
     // TODO: Necessary?
-    return 'Quote'
+    return 'Quote';
   }
 
-})
+});
 
 /**
  * @param {ParseSpan} span
@@ -830,23 +830,23 @@ var Quote = AST.extend(function(span, prefix, uninterpretedExpression, location)
  * @extends {AST}
  */
 var SafeMethodCall = AST.extend(function(span, receiver, name, args) {
-  SafeMethodCall.super_.call(this, span)
+  SafeMethodCall.super_.call(this, span);
 
   /**
    * @public
    * @type {AST}
    */
-  this.receiver = receiver
+  this.receiver = receiver;
   /**
    * @public
    * @type {string}
    */
-  this.name = name
+  this.name = name;
   /**
    * @public
    * @type {Array}
    */
-  this.args = args
+  this.args = args;
 }, {
 
   /**
@@ -855,13 +855,13 @@ var SafeMethodCall = AST.extend(function(span, receiver, name, args) {
    */
   visit: function(visitor, context) {
     if (typeof context === 'undefined') {
-      context = null
+      context = null;
     }
 
-    return visitor.visitSafeMethodCall(this, context)
+    return visitor.visitSafeMethodCall(this, context);
   }
 
-})
+});
 
 /**
  * @param {ParseSpan} span
@@ -872,18 +872,18 @@ var SafeMethodCall = AST.extend(function(span, receiver, name, args) {
  * @extends {AST}
  */
 var SafePropertyRead = AST.extend(function(span, receiver, name) {
-  SafePropertyRead.super_.call(this, span)
+  SafePropertyRead.super_.call(this, span);
 
   /**
    * @public
    * @type {AST}
    */
-  this.receiver = receiver
+  this.receiver = receiver;
   /**
    * @public
    * @type {string}
    */
-  this.name = name
+  this.name = name;
 }, {
 
   /**
@@ -892,19 +892,19 @@ var SafePropertyRead = AST.extend(function(span, receiver, name) {
    */
   visit: function(visitor, context) {
     if (typeof context === 'undefined') {
-      context = null
+      context = null;
     }
 
-    return visitor.visitSafePropertyRead(this, context)
+    return visitor.visitSafePropertyRead(this, context);
   }
 
-})
+});
 
 /**
  * @public
  * @class ASTVisitor
  */
-var ASTVisitor = Oopsy.extend({
+var ASTVisitor = Nevis.extend({
 
   /**
    * @param {Binary} ast
@@ -1077,7 +1077,7 @@ var ASTVisitor = Oopsy.extend({
    */
   visitSafePropertyRead: function(ast, context) {}
 
-})
+});
 
 /**
  * @public
@@ -1092,12 +1092,12 @@ var ASTTransformer = ASTVisitor.extend({
    * @public
    */
   visitAll: function(asts) {
-    var results = new Array(asts.length)
+    var results = new Array(asts.length);
     for (var i = 0; i < asts.length; i++) {
-      results[i] = asts[i].visit(this)
+      results[i] = asts[i].visit(this);
     }
 
-    return results
+    return results;
   },
 
   /**
@@ -1105,7 +1105,7 @@ var ASTTransformer = ASTVisitor.extend({
    * @inheritDoc
    */
   visitBinary: function(ast, context) {
-    return new Binary(ast.span, ast.operation, ast.left.visit(this), ast.right.visit(this))
+    return new Binary(ast.span, ast.operation, ast.left.visit(this), ast.right.visit(this));
   },
 
   /**
@@ -1113,7 +1113,7 @@ var ASTTransformer = ASTVisitor.extend({
    * @inheritDoc
    */
   visitChain: function(ast, context) {
-    return new Chain(ast.span, this.visitAll(ast.expressions))
+    return new Chain(ast.span, this.visitAll(ast.expressions));
   },
 
   /**
@@ -1122,7 +1122,7 @@ var ASTTransformer = ASTVisitor.extend({
    */
   visitConditional: function(ast, context) {
     return new Conditional(ast.span, ast.condition.visit(this), ast.trueExpression.visit(this),
-      ast.falseExpression.visit(this))
+      ast.falseExpression.visit(this));
   },
 
   /**
@@ -1130,7 +1130,7 @@ var ASTTransformer = ASTVisitor.extend({
    * @inheritDoc
    */
   visitFunctionCall: function(ast, context) {
-    return new FunctionCall(ast.span, ast.target.visit(this), this.visitAll(ast.args))
+    return new FunctionCall(ast.span, ast.target.visit(this), this.visitAll(ast.args));
   },
 
   /**
@@ -1138,7 +1138,7 @@ var ASTTransformer = ASTVisitor.extend({
    * @inheritDoc
    */
   visitImplicitReceiver: function(ast, context) {
-    return ast
+    return ast;
   },
 
   /**
@@ -1146,7 +1146,7 @@ var ASTTransformer = ASTVisitor.extend({
    * @inheritDoc
    */
   visitInterpolation: function(ast, context) {
-    return new Interpolation(ast.span, ast.strings, this.visitAll(ast.expressions))
+    return new Interpolation(ast.span, ast.strings, this.visitAll(ast.expressions));
   },
 
   /**
@@ -1154,7 +1154,7 @@ var ASTTransformer = ASTVisitor.extend({
    * @inheritDoc
    */
   visitKeyedRead: function(ast, context) {
-    return new KeyedRead(ast.span, ast.obj.visit(this), ast.key.visit(this))
+    return new KeyedRead(ast.span, ast.obj.visit(this), ast.key.visit(this));
   },
 
   /**
@@ -1162,7 +1162,7 @@ var ASTTransformer = ASTVisitor.extend({
    * @inheritDoc
    */
   visitKeyedWrite: function(ast, context) {
-    return new KeyedWrite(ast.span, ast.obj.visit(this), ast.key.visit(this), ast.value.visit(this))
+    return new KeyedWrite(ast.span, ast.obj.visit(this), ast.key.visit(this), ast.value.visit(this));
   },
 
   /**
@@ -1170,7 +1170,7 @@ var ASTTransformer = ASTVisitor.extend({
    * @inheritDoc
    */
   visitLiteralArray: function(ast, context) {
-    return new LiteralArray(ast.span, this.visitAll(ast.expressions))
+    return new LiteralArray(ast.span, this.visitAll(ast.expressions));
   },
 
   /**
@@ -1178,7 +1178,7 @@ var ASTTransformer = ASTVisitor.extend({
    * @inheritDoc
    */
   visitLiteralMap: function(ast, context) {
-    return new LiteralMap(ast.span, ast.keys, this.visitAll(ast.values))
+    return new LiteralMap(ast.span, ast.keys, this.visitAll(ast.values));
   },
 
   /**
@@ -1186,7 +1186,7 @@ var ASTTransformer = ASTVisitor.extend({
    * @inheritDoc
    */
   visitLiteralPrimitive: function(ast, context) {
-    return new LiteralPrimitive(ast.span, ast.value)
+    return new LiteralPrimitive(ast.span, ast.value);
   },
 
   /**
@@ -1194,7 +1194,7 @@ var ASTTransformer = ASTVisitor.extend({
    * @inheritDoc
    */
   visitMethodCall: function(ast, context) {
-    return new MethodCall(ast.span, ast.receiver.visit(this), ast.name, this.visitAll(ast.args))
+    return new MethodCall(ast.span, ast.receiver.visit(this), ast.name, this.visitAll(ast.args));
   },
 
   /**
@@ -1202,7 +1202,7 @@ var ASTTransformer = ASTVisitor.extend({
    * @inheritDoc
    */
   visitPipe: function(ast, context) {
-    return new BindingPipe(ast.span, ast.expression.visit(this), ast.name, this.visitAll(ast.args))
+    return new BindingPipe(ast.span, ast.expression.visit(this), ast.name, this.visitAll(ast.args));
   },
 
   /**
@@ -1210,7 +1210,7 @@ var ASTTransformer = ASTVisitor.extend({
    * @inheritDoc
    */
   visitPrefixNot: function(ast, context) {
-    return new PrefixNot(ast.span, ast.expression.visit(this))
+    return new PrefixNot(ast.span, ast.expression.visit(this));
   },
 
   /**
@@ -1218,7 +1218,7 @@ var ASTTransformer = ASTVisitor.extend({
    * @inheritDoc
    */
   visitPropertyRead: function(ast, context) {
-    return new PropertyRead(ast.span, ast.receiver.visit(this), ast.name)
+    return new PropertyRead(ast.span, ast.receiver.visit(this), ast.name);
   },
 
   /**
@@ -1226,7 +1226,7 @@ var ASTTransformer = ASTVisitor.extend({
    * @inheritDoc
    */
   visitPropertyWrite: function(ast, context) {
-    return new PropertyWrite(ast.span, ast.receiver.visit(this), ast.name, ast.value)
+    return new PropertyWrite(ast.span, ast.receiver.visit(this), ast.name, ast.value);
   },
 
   /**
@@ -1234,7 +1234,7 @@ var ASTTransformer = ASTVisitor.extend({
    * @inheritDoc
    */
   visitQuote: function(ast, context) {
-    return new Quote(ast.span, ast.prefix, ast.uninterpretedExpression, ast.location)
+    return new Quote(ast.span, ast.prefix, ast.uninterpretedExpression, ast.location);
   },
 
   /**
@@ -1242,7 +1242,7 @@ var ASTTransformer = ASTVisitor.extend({
    * @inheritDoc
    */
   visitSafeMethodCall: function(ast, context) {
-    return new SafeMethodCall(ast.span, ast.receiver.visit(this), ast.name, this.visitAll(ast.args))
+    return new SafeMethodCall(ast.span, ast.receiver.visit(this), ast.name, this.visitAll(ast.args));
   },
 
   /**
@@ -1250,10 +1250,10 @@ var ASTTransformer = ASTVisitor.extend({
    * @inheritDoc
    */
   visitSafePropertyRead: function(ast, context) {
-    return new SafePropertyRead(ast.span, ast.receiver.visit(this), ast.name)
+    return new SafePropertyRead(ast.span, ast.receiver.visit(this), ast.name);
   }
 
-})
+});
 
 /**
  * @public
@@ -1270,10 +1270,10 @@ var RecursiveASTVisitor = ASTVisitor.extend({
    */
   visitAll: function(asts, context) {
     for (var i = 0; i < asts.length; i++) {
-      asts[i].visit(this, context)
+      asts[i].visit(this, context);
     }
 
-    return null
+    return null;
   },
 
   /**
@@ -1281,10 +1281,10 @@ var RecursiveASTVisitor = ASTVisitor.extend({
    * @inheritDoc
    */
   visitBinary: function(ast, context) {
-    ast.left.visit(this)
-    ast.right.visit(this)
+    ast.left.visit(this);
+    ast.right.visit(this);
 
-    return null
+    return null;
   },
 
   /**
@@ -1292,7 +1292,7 @@ var RecursiveASTVisitor = ASTVisitor.extend({
    * @inheritDoc
    */
   visitChain: function(ast, context) {
-    return this.visitAll(ast.expressions, context)
+    return this.visitAll(ast.expressions, context);
   },
 
   /**
@@ -1300,11 +1300,11 @@ var RecursiveASTVisitor = ASTVisitor.extend({
    * @inheritDoc
    */
   visitConditional: function(ast, context) {
-    ast.condition.visit(this)
-    ast.trueExpression.visit(this)
-    ast.falseExpression.visit(this)
+    ast.condition.visit(this);
+    ast.trueExpression.visit(this);
+    ast.falseExpression.visit(this);
 
-    return null
+    return null;
   },
 
   /**
@@ -1312,11 +1312,11 @@ var RecursiveASTVisitor = ASTVisitor.extend({
    * @inheritDoc
    */
   visitFunctionCall: function(ast, context) {
-    ast.target.visit(this)
+    ast.target.visit(this);
 
-    this.visitAll(ast.args, context)
+    this.visitAll(ast.args, context);
 
-    return null
+    return null;
   },
 
   /**
@@ -1324,7 +1324,7 @@ var RecursiveASTVisitor = ASTVisitor.extend({
    * @inheritDoc
    */
   visitImplicitReceiver: function(ast, context) {
-    return null
+    return null;
   },
 
   /**
@@ -1332,7 +1332,7 @@ var RecursiveASTVisitor = ASTVisitor.extend({
    * @inheritDoc
    */
   visitInterpolation: function(ast, context) {
-    return this.visitAll(ast.expressions, context)
+    return this.visitAll(ast.expressions, context);
   },
 
   /**
@@ -1340,10 +1340,10 @@ var RecursiveASTVisitor = ASTVisitor.extend({
    * @inheritDoc
    */
   visitKeyedRead: function(ast, context) {
-    ast.obj.visit(this)
-    ast.key.visit(this)
+    ast.obj.visit(this);
+    ast.key.visit(this);
 
-    return null
+    return null;
   },
 
   /**
@@ -1351,11 +1351,11 @@ var RecursiveASTVisitor = ASTVisitor.extend({
    * @inheritDoc
    */
   visitKeyedWrite: function(ast, context) {
-    ast.obj.visit(this)
-    ast.key.visit(this)
-    ast.value.visit(this)
+    ast.obj.visit(this);
+    ast.key.visit(this);
+    ast.value.visit(this);
 
-    return null
+    return null;
   },
 
   /**
@@ -1363,7 +1363,7 @@ var RecursiveASTVisitor = ASTVisitor.extend({
    * @inheritDoc
    */
   visitLiteralArray: function(ast, context) {
-    return this.visitAll(ast.expressions, context)
+    return this.visitAll(ast.expressions, context);
   },
 
   /**
@@ -1371,7 +1371,7 @@ var RecursiveASTVisitor = ASTVisitor.extend({
    * @inheritDoc
    */
   visitLiteralMap: function(ast, context) {
-    return this.visitAll(ast.values, context)
+    return this.visitAll(ast.values, context);
   },
 
   /**
@@ -1379,7 +1379,7 @@ var RecursiveASTVisitor = ASTVisitor.extend({
    * @inheritDoc
    */
   visitLiteralPrimitive: function(ast, context) {
-    return null
+    return null;
   },
 
   /**
@@ -1387,9 +1387,9 @@ var RecursiveASTVisitor = ASTVisitor.extend({
    * @inheritDoc
    */
   visitMethodCall: function(ast, context) {
-    ast.receiver.visit(this)
+    ast.receiver.visit(this);
 
-    return this.visitAll(ast.args, context)
+    return this.visitAll(ast.args, context);
   },
 
   /**
@@ -1397,11 +1397,11 @@ var RecursiveASTVisitor = ASTVisitor.extend({
    * @inheritDoc
    */
   visitPipe: function(ast, context) {
-    ast.expression.visit(this)
+    ast.expression.visit(this);
 
-    this.visitAll(ast.args, context)
+    this.visitAll(ast.args, context);
 
-    return null
+    return null;
   },
 
   /**
@@ -1409,9 +1409,9 @@ var RecursiveASTVisitor = ASTVisitor.extend({
    * @inheritDoc
    */
   visitPrefixNot: function(ast, context) {
-    ast.expression.visit(this)
+    ast.expression.visit(this);
 
-    return null
+    return null;
   },
 
   /**
@@ -1419,9 +1419,9 @@ var RecursiveASTVisitor = ASTVisitor.extend({
    * @inheritDoc
    */
   visitPropertyRead: function(ast, context) {
-    ast.receiver.visit(this)
+    ast.receiver.visit(this);
 
-    return null
+    return null;
   },
 
   /**
@@ -1429,10 +1429,10 @@ var RecursiveASTVisitor = ASTVisitor.extend({
    * @inheritDoc
    */
   visitPropertyWrite: function(ast, context) {
-    ast.receiver.visit(this)
-    ast.value.visit(this)
+    ast.receiver.visit(this);
+    ast.value.visit(this);
 
-    return null
+    return null;
   },
 
   /**
@@ -1440,7 +1440,7 @@ var RecursiveASTVisitor = ASTVisitor.extend({
    * @inheritDoc
    */
   visitQuote: function(ast, context) {
-    return null
+    return null;
   },
 
   /**
@@ -1448,9 +1448,9 @@ var RecursiveASTVisitor = ASTVisitor.extend({
    * @inheritDoc
    */
   visitSafeMethodCall: function(ast, context) {
-    ast.receiver.visit(this)
+    ast.receiver.visit(this);
 
-    return this.visitAll(ast.args, context)
+    return this.visitAll(ast.args, context);
   },
 
   /**
@@ -1458,12 +1458,12 @@ var RecursiveASTVisitor = ASTVisitor.extend({
    * @inheritDoc
    */
   visitSafePropertyRead: function(ast, context) {
-    ast.receiver.visit(this)
+    ast.receiver.visit(this);
 
-    return null
+    return null;
   }
 
-})
+});
 
 /**
  * @param {string} key
@@ -1473,28 +1473,28 @@ var RecursiveASTVisitor = ASTVisitor.extend({
  * @public
  * @class TemplateBinding
  */
-var TemplateBinding = Oopsy.extend(function(key, keyIsVar, name, expression) {
+var TemplateBinding = Nevis.extend(function(key, keyIsVar, name, expression) {
   /**
    * @public
    * @type {string}
    */
-  this.key = key
+  this.key = key;
   /**
    * @public
    * @type {boolean}
    */
-  this.keyIsVar = keyIsVar
+  this.keyIsVar = keyIsVar;
   /**
    * @public
    * @type {string}
    */
-  this.name = name
+  this.name = name;
   /**
    * @public
    * @type {ASTWithSource}
    */
-  this.expression = expression
-})
+  this.expression = expression;
+});
 
 module.exports = {
   AST: AST,
@@ -1525,4 +1525,4 @@ module.exports = {
   SafeMethodCall: SafeMethodCall,
   SafePropertyRead: SafePropertyRead,
   TemplateBinding: TemplateBinding
-}
+};
